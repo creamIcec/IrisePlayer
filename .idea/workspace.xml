@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="IrisePlayer:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/IrisePlayer_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/jl1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/mp3spi_1_9_9.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/tritonus_share_0_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IrisePlayer.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2Dn8p0WRbCPJ8dCRXERjiY2kqHk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/musique-master&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3248848&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="Renderer" />
+      <recent name="Renderer.Operating" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programming\Java\IrisePlayer\src" />
+      <recent name="D:\Programming\Java\IrisePlayer\src\org\share\sampled\mixer" />
+      <recent name="D:\Programming\Java\IrisePlayer\src\org" />
+      <recent name="D:\Programming\Java\IrisePlayer\src\com\Iriseplos\iriseplayer" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.Iriseplos.iriseplayer.player" />
+    </key>
+  </component>
+  <component name="RunManager" selected="应用程序.com.Iriseplos.iriseplayer.Init">
+    <configuration name="未命名" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.jaudiotagger.Test2" />
+      <module name="IrisePlayer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Init" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Init" />
+      <module name="IrisePlayer" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\Jdk-18_JFX\lib&quot; --add-modules javafx.controls" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Mp3Info" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="demoplayer.Mp3Info" />
+      <module name="IrisePlayer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="demoplayer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MusicLoader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.Iriseplos.iriseplayer.player.filesystem.MusicLoader" />
+      <module name="IrisePlayer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.Iriseplos.iriseplayer.player.filesystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SoundFileFormat" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.Iriseplos.iriseplayer.player.filesystem.SoundFileFormat" />
+      <module name="IrisePlayer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.Iriseplos.iriseplayer.player.filesystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.Test" />
+      <module name="IrisePlayer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestMP3Spi" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="javazoom.spi.mpeg.sampled.file.tag.IcyInputStream" />
+      <module name="IrisePlayer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestPlayer" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.Iriseplos.iriseplayer.player.MusicPlayer" />
+      <module name="IrisePlayer" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;D:\Programming\Java\IrisePlayer\MitiS; RUNN - Shattered (feat. RUNN).mp3&quot;" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.Iriseplos.iriseplayer.Init" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.Iriseplos.iriseplayer.Init" />
+      <module name="IrisePlayer" />
+      <option name="VM_PARAMETERS" value="-Djavafx.animation.fullspeed=true" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.Iriseplos.iriseplayer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.Iriseplos.iriseplayer.Init" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.Iriseplos.iriseplayer.Init" />
+      <module name="IrisePlayer" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\Jdk-18_JFX\lib&quot; --add-modules javafx.controls" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="应用程序.Init" />
+      <item itemvalue="应用程序.TestMP3Spi" />
+      <item itemvalue="应用程序.TestPlayer" />
+      <item itemvalue="应用程序.未命名" />
+      <item itemvalue="应用程序.Mp3Info" />
+      <item itemvalue="应用程序.MusicLoader" />
+      <item itemvalue="应用程序.SoundFileFormat" />
+      <item itemvalue="应用程序.Test" />
+      <item itemvalue="应用程序.com.Iriseplos.iriseplayer.Init" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="应用程序.com.Iriseplos.iriseplayer.Init" />
+        <item itemvalue="应用程序.Test" />
+        <item itemvalue="应用程序.SoundFileFormat" />
+        <item itemvalue="应用程序.MusicLoader" />
+        <item itemvalue="应用程序.Mp3Info" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="" />
+      <created>1661323668172</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661323668172</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../musique-master/musique-0.2/modules/jaudiotagger/src/org/jaudiotagger/audio/wavpack/WavPackReader.java</url>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/IrisePlayer$com_Iriseplos_iriseplayer_Init.ic" NAME="com.Iriseplos.iriseplayer.Init 覆盖结果" MODIFIED="1661653045190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.Iriseplos.iriseplayer.*</FILTER>
+    </SUITE>
+  </component>
+</project>

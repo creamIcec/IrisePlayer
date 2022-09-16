@@ -1,0 +1,36 @@
+.version-description{
+    -fx-text-fill:#5f6467;
+    -fx-font-size:15px;
+    -fx-line-spacing:10px;
+    -fx-padding:25px;
+}
+.hbox-style{
+    -fx-alignment:top-center;
+}
+.title{
+    -fx-font-size:20;
+    -fx-font-weight:700;
+    -fx-text-fill:#000000;
+}
+.window-operator-buttons{
+    -fx-background-color:#ffffff00;
+}
+#vbox-left{
+    -fx-padding:20px;
+    -fx-spacing:10px;
+}
+#vbox-root{
+    -fx-alignment:top-center;
+    -fx-background-color:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #E3EEFFFF 0.0%, #FFE3F7FF 100.0%);
+    -fx-border-radius:10px;
+    -fx-background-radius:10px;
+}
+
+#hbox-overall{
+    -fx-spacing:100px;
+}
+#tool-bar{
+    -fx-alignment:top-right;
+    -fx-padding:-5px;
+    -fx-spacing:-10px;
+}

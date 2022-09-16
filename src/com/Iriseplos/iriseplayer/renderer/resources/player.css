@@ -1,0 +1,36 @@
+.window-operator-buttons{
+    -fx-background-color:#ffffff00;
+}
+.title{
+    -fx-font-size:25px;
+    -fx-font-weight:700;
+}
+#tool-bar{
+    -fx-alignment:top-right;
+    -fx-padding:-5px;
+    -fx-spacing:-10px;
+}
+#vbox-root{
+    /*-fx-alignment:top-center;*/
+    -fx-background-color:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #E3EEFFFF 0.0%, #FFE3F7FF 100.0%);
+    -fx-background-color:#ffffff90;
+    -fx-border-radius:10px;
+    -fx-background-radius:10px;
+}
+#hbox-overall{
+    -fx-alignment:top-center;
+    /*-fx-border-width:5px;
+    -fx-border-color:#000000;*/
+}
+#music-list-content{
+    -fx-background-color:rgba(0,0,0,0.5);
+    -fx-border-radius:10px;
+}
+#music-list{
+    -fx-padding:0px 0px 0px 0px;
+    -fx-background-color:rgba(0,0,0,0.0);
+}
+#main{
+    /*-fx-border-color: #1199ee;
+    -fx-border-width:5px;*/
+}

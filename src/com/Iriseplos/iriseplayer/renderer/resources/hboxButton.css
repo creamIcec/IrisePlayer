@@ -1,0 +1,21 @@
+.hbox-style{
+    -fx-alignment:top-center;
+}
+.command-label{
+    -fx-text-alignment:center;
+    -fx-font-size:15px;
+}
+.icon-load{
+    -fx-scale-x:0.4;
+    -fx-scale-y:0.4;
+}
+.hbox-button-load{
+    -fx-spacing:30px;
+    -fx-alignment:center-left;
+    -fx-border-color:#c8d3d9;
+    -fx-border-radius:10px;
+    -fx-border-width:2px;
+    -fx-pref-width:300px;
+    -fx-background-color:#ffffff50;
+    -fx-background-radius:10px;
+}
