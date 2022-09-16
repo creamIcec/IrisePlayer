@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact name="IrisePlayer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IrisePlayer_jar</output-path>
+    <root id="root">
+      <element id="archive" name="IrisePlayer.jar">
+        <element id="module-output" name="IrisePlayer" />
+        <element id="library" level="project" name="jl1.0.1" />
+        <element id="library" level="project" name="mp3spi-1.9.9" />
+        <element id="library" level="project" name="tritonus-share-0.3.11" />
+      </element>
+    </root>
+  </artifact>
+</component>
