@@ -22,15 +22,15 @@ public class Agent {
     public void toPause(){
         musicPlayer.pauseMusic();
     }
-    public void toContinue(){
+    /*public void toContinue(){
         musicPlayer.continueMusic();
-    }
+    }*/
     public void toStop() throws Exception {
         musicPlayer.stopMusic();
     }
-    public void toStart() throws Exception {
+    /*public void toStart() throws Exception {
         musicPlayer.start(false,0);
-    }
+    }*/
     public PlayingStatus agentCheckPlayingStatus(){
         return musicPlayer.checkPlayingStatus();
     }
@@ -144,11 +144,8 @@ public class Agent {
     public void agentControlVolume(float delta){
         musicPlayer.controlVolume(delta);
     }
-    public void agentSetAutoChanged() throws Exception {
+    public void agentSetAutoChanged(){
         Start.getStartUpWindow().getPlayerWindow().autoChange();
-    }
-    public void agentGetAutoChanged() {
-
     }
     public void agentChangePosition(double playPercentage) throws Exception {
         musicPlayer.changePosition(playPercentage);

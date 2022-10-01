@@ -208,7 +208,7 @@ public class MusicLoader {
             ID3v2 id3v2Tag = mp3file.getId3v2Tag();
             byte[] imageData = id3v2Tag.getAlbumImage();
             if (imageData != null) {
-                String mimeType = id3v2Tag.getAlbumImageMimeType();
+                //String mimeType = id3v2Tag.getAlbumImageMimeType();
                 // Write image to file - can determine appropriate file extension from the mime type
                 InputStream input = new ByteArrayInputStream(imageData);
                 albumImage = new Image(input);
@@ -246,8 +246,7 @@ public class MusicLoader {
 
     public static ID3v1 getMp3Info(Mp3File mp3File){
         if (mp3File.hasId3v1Tag()) {
-            ID3v1 id3v1Tag = mp3File.getId3v1Tag();
-            return id3v1Tag;
+            return mp3File.getId3v1Tag();
         }else {
             return null;
         }
@@ -255,17 +254,15 @@ public class MusicLoader {
 
     public static ID3v2 getMp3ID3v2Info(Mp3File mp3File){
         if (mp3File.hasId3v2Tag()) {
-            ID3v2 id3v2Tag = mp3File.getId3v2Tag();
             //以下代码用于获取专辑封面图片，暂不启用
             /*byte[] albumImageData = id3v2Tag.getAlbumImage();
             if (albumImageData != null) {
                 System.out.println("Have album image data, length: " + albumImageData.length + " bytes");
                 System.out.println("Album image mime type: " + id3v2Tag.getAlbumImageMimeType());
             }*/
-            return id3v2Tag;
-        }else{
-            return null;
-        }
+            return mp3File.getId3v2Tag();
+
+        }else return null;
     }
 
     public static long getTotalByteLength(File mp3File) throws Exception{

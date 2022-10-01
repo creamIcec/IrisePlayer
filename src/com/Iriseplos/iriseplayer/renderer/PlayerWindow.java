@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -24,6 +25,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -54,6 +56,12 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     HBox leftMain = new HBox();
     //堆叠盒子，用于设计按钮的动画
     StackPane[] buttonPanes = {new StackPane(),new StackPane(),new StackPane(),new StackPane()};
+
+    StackPane stackPaneRoot = new StackPane();
+
+    StackPane progressContainer = new StackPane();
+
+    ImageView backgroundImage = new ImageView();
     //标题
     Label musicTitle = new Label("未知标题");
     //艺术家
@@ -92,16 +100,28 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
 
     //渲染参数: 控制音量控制条的尺寸
     Scale volumeBarSize = new Scale(0.5,1);
+    //"添加"两个按钮的容器
+    HBox addWrapper = new HBox();
     //"添加"按钮
-    HBoxButton addMusic = new HBoxButton("resources/icon/add.png", "添加");
+    HBoxButton addMusic = new HBoxButton("resources/icon/add.png", "添加",150);
+    //"添加文件夹"按钮
+    HBoxButton addMusicFolder = new HBoxButton("resources/icon/openfolder.png", "添加文件夹",150);
 
     HBoxButton removeMusic = new HBoxButton("resources/icon/delete.png","删除");
 
+    //播放控制按钮背景
     Rectangle[] buttonBackCovers = {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle()};
+    //进度条Mask
+    Rectangle sliderMask = new Rectangle();
+    //场景宽度
+    int sceneWidth=1140;
+    //场景长度
+    int sceneHeight=740;
+
 
     //TODO 添加文件夹功能
     //场景
-    Scene scene = new Scene(playerRoot, 1140, 740);
+    Scene scene = new Scene(stackPaneRoot, sceneWidth, sceneHeight);
     //舞台，相当于窗口
     Stage playerStage = new Stage();
     //代理人，用于前后端沟通
@@ -112,10 +132,12 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     private float musicLength;
     //标记是否为初次加载，便于第一次加载直接播放(具体见下面方法)
     private boolean isFirstLoaded = true;
-
+    //按钮渐变动画时间轴
     private Timeline buttonTransitionTimeline = new Timeline();
-
     private AnimationGenerator animationGenerator;
+
+    //背景图片载体
+    Rectangle backRect = new Rectangle(sceneWidth,sceneHeight);
     //(弃用)标记是否播放结束已自动切换
     @Deprecated
     private boolean isMusicAutoChanged = false;
@@ -146,7 +168,8 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         return buttonBackCovers[index];
     }
     //初始化方法：渲染窗口，调用事件绑定方法，绑定动态渲染
-    public void start() throws Exception {
+    /* @para fileOrFolder true=file,false=folder*/
+    public void start(boolean fileOrFolder) throws Exception {
         drawUI();
         scene.setFill(Paint.valueOf("#ffffff00"));
         playerStage.setTitle("Irise Player");
@@ -154,8 +177,17 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         playerStage.setScene(scene);
         playerStage.show();
         bindEvents();
-        onOpenFile();
+        if (fileOrFolder) onOpenFile();
+        else onOpenFolder();
         new RefreshProgressThread().start();
+    }
+
+    private void genSliderMask(){
+        sliderMask.heightProperty().bind(playProgress.heightProperty().subtract(7));
+        sliderMask.widthProperty().bind(playProgress.widthProperty());
+        sliderMask.setFill(Paint.valueOf("#111111"));
+        sliderMask.setArcWidth(10);
+        sliderMask.setArcHeight(10);
     }
 
     //设置按钮渐变动画
@@ -179,6 +211,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         //System.out.println(scene.getHeight());
         playerOverAll.setPrefHeight(scene.getHeight());
         playerOverAll.setSpacing(scene.getWidth() * 0.1);
+        stackPaneRoot.setId("stackpane-root");
         playerMain.setSpacing(scene.getHeight() * 0.1);
         for (ImageView nIs : navigatorControls) {
             nIs.setStyle("-fx-scale-x:0.5;-fx-scale-y:0.5");
@@ -203,6 +236,8 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         album.setStyle("-fx-font-size:15px;-fx-font-weight:200");
         musicIcon.setFitWidth(200);
         musicIcon.setFitHeight(200);
+        backgroundImage.setFitWidth(sceneWidth);
+        backgroundImage.setFitHeight(sceneHeight);
         for(index =0;index<=3;index++) {
             buttonBackCovers[index].setFill(Paint.valueOf("rgba(0,0,0,0.0)"));
             buttonBackCovers[index].setWidth(musicControlsButton[0].getScaleX() * musicControlsButton[0].getPrefWidth());
@@ -211,20 +246,28 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
             buttonBackCovers[index].setArcHeight(10);
         }
         musicListViewUI.setId("music-list-content");
+        backRect.setArcWidth(20);
+        backRect.setArcHeight(20);
         /*volumeBarPos.setY(-50);
         volumeControlBar.getTransforms().add(volumeBarPos);*/
+        stackPaneRoot.getChildren().addAll(backgroundImage,playerRoot);
         playerRoot.getChildren().addAll(toolBar, playerOverAll);
         playerOverAll.getChildren().addAll(leftMain, musicListView);
         leftMain.getChildren().addAll(navigator, playerMain);
-        musicListView.getChildren().addAll(musicListTitle, addMusic, removeMusic, musicListViewUI);
+        addWrapper.getChildren().addAll(addMusic, addMusicFolder);
+        musicListView.getChildren().addAll(musicListTitle,addWrapper,removeMusic, musicListViewUI);
         navigator.getChildren().addAll(navigatorControls[0], navigatorControls[1], navigatorControls[2]);
-        playerMain.getChildren().addAll(infoMain, musicIcon, playProgress, controlBar,volumeControlBar);
+        progressContainer.getChildren().addAll(sliderMask,playProgress);
+        playerMain.getChildren().addAll(infoMain, musicIcon, progressContainer, controlBar,volumeControlBar);
         infoMain.getChildren().addAll(musicTitle, artist, album);
         for(index = 0;index<=3;index++) {
             buttonPanes[index].getChildren().addAll(buttonBackCovers[index], musicControlsButton[index]);
         }
         controlBar.getChildren().addAll(buttonPanes);
         //动态渲染
+        backgroundImage.setClip(backRect);
+        backgroundImage.setEffect(new GaussianBlur(40));
+        playProgress.setId("progress-bar");
         playProgress.setValue(0.0d);
         playProgress.setPrefWidth(scene.getWidth()/2);
         volumeControlBar.setPrefWidth(scene.getWidth()/2);
@@ -246,6 +289,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         musicControlsButton[0].setOnMouseClicked(new PauseMusic());
         closeWindowButton.setOnMouseClicked(new MouseClickClose());
         addMusic.setOnMouseClicked(new MouseClickAdd());
+        addMusicFolder.setOnMouseClicked(new MouseClickAddFolder());
         musicListViewUI.setOnMouseClicked(new MouseClickMusicItemCell());
         musicControlsButton[3].setOnMouseClicked(new MouseClickNext());
         musicControlsButton[1].setOnMouseClicked(new MouseClickLast());
@@ -259,6 +303,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
                 Button btn = (Button)mouseEvent.getSource();
                 buttonTransitionTimeline = animationGenerator.getTimeLine(AnimationGenerator.AnimationType.IN, Integer.parseInt(btn.getId()));
                 buttonTransitionTimeline.stop();
+                System.gc();
                 buttonTransitionTimeline.play();
             });
             musicControlsButton[index].setOnMouseExited(mouseEvent -> {
@@ -266,9 +311,11 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
                 Button btn = (Button)mouseEvent.getSource();
                 buttonTransitionTimeline = animationGenerator.getTimeLine(AnimationGenerator.AnimationType.OUT, Integer.parseInt(btn.getId()));
                 buttonTransitionTimeline.stop();
+                System.gc();
                 buttonTransitionTimeline.play();
             });
         }
+        genSliderMask();
     }
     protected void drawWindowOperatorButtons() {
         closeWindowButton.getStyleClass().add("window-operator-buttons");
@@ -295,12 +342,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         try {
             if(isFirstLoaded) {
                 playAgent.agentAddMusic(selectedFile);
-                playAgent.agentSetMusic(0);
-                musicLength = playAgent.agentGetTotalLength(selectedFile);
-                musicIcon.setImage(playAgent.agentGetAlbumIcon());
-                musicTitle.setText(playAgent.agentGetCurrentMusicName());
-                artist.setText(playAgent.agentGetCurrentMusicArtist());
-                album.setText(playAgent.agentGetCurrentMusicAlbum());
+                loadMusicInfoToScreen();
                 isFirstLoaded = false;
             }else{
                 playAgent.agentAddMusic(selectedFile);
@@ -320,10 +362,40 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
             ex.printStackTrace();
         }
     }
+    //打开文件夹
+    private void onOpenFolder() throws Exception {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File[] choosedFiles;
+        directoryChooser.setTitle("选择音频文件所在文件夹");
+        selectedFile = directoryChooser.showDialog(playerStage);
+        if(selectedFile.isDirectory()){
+            choosedFiles = selectedFile.listFiles((dir, name) -> name.endsWith(".mp3"));
+            for(File choosedFile : choosedFiles) {
+                playAgent.agentAddMusic(choosedFile);
+                MLUI.addListViewContent(choosedFile);
+            }
+            if(isFirstLoaded){
+                loadMusicInfoToScreen();
+                isFirstLoaded = false;
+            }
+        }else{
+            onOpenFile();
+        }
+    }
     //(弃用)获取当前代理人
     @Deprecated
     public Agent getPlayAgent(){
         return playAgent;
+    }
+
+    private void loadMusicInfoToScreen() throws Exception {
+        playAgent.agentSetMusic(0);
+        musicLength = playAgent.agentGetTotalLength(playAgent.agentGetCurrentPlayingFile());
+        musicIcon.setImage(playAgent.agentGetAlbumIcon());
+        musicTitle.setText(playAgent.agentGetCurrentMusicName());
+        artist.setText(playAgent.agentGetCurrentMusicArtist());
+        album.setText(playAgent.agentGetCurrentMusicAlbum());
+        backgroundImage.setImage(playAgent.agentGetAlbumIcon());
     }
 
     public void autoChange(){
@@ -362,6 +434,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
 
     private class RefreshProgressThread extends Thread {
         double currentProgress;
+        double lastProgress;
 
         //float audioTotalLength = playAgent.agentGetTotalLength(selectedFile);
 
@@ -373,7 +446,12 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
             try {
                 while (playerStage.isShowing()) {
                     currentProgress = playProgress.getMax()*playAgent.agentGetPlayedLength() / musicLength;
-                    Platform.runLater(() -> playProgress.setValue(currentProgress));
+                    Platform.runLater(() -> {
+                        lastProgress = playProgress.getValue();
+                        playProgress.setValue(currentProgress);
+                        String style = String.format("-fx-fill:linear-gradient(to right,#1199ee %f%%, #111111 %f%%);",currentProgress, lastProgress);
+                        sliderMask.setStyle(style);
+                    });
                     Thread.sleep(1000);
                 }
             } catch (InterruptedException | InvalidDataException | UnsupportedTagException | IOException e) {
@@ -396,6 +474,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
                         musicTitle.setText(playAgent.agentGetCurrentMusicName());
                         artist.setText(playAgent.agentGetCurrentMusicArtist());
                         album.setText(playAgent.agentGetCurrentMusicAlbum());
+                        backgroundImage.setImage(playAgent.agentGetAlbumIcon());
                         resetControls();
                         musicListViewUI.getSelectionModel().clearSelection();
                     }
@@ -480,6 +559,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
                 musicTitle.setText(playAgent.agentGetCurrentMusicName());
                 artist.setText(playAgent.agentGetCurrentMusicArtist());
                 album.setText(playAgent.agentGetCurrentMusicAlbum());
+                backgroundImage.setImage(playAgent.agentGetAlbumIcon());
                 resetControls();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -496,6 +576,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
                 musicTitle.setText(playAgent.agentGetCurrentMusicName());
                 artist.setText(playAgent.agentGetCurrentMusicArtist());
                 album.setText(playAgent.agentGetCurrentMusicAlbum());
+                backgroundImage.setImage(playAgent.agentGetAlbumIcon());
                 resetControls();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -507,6 +588,17 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         @Override
         public void handle(MouseEvent mouseEvent) {
             onOpenFile();
+        }
+    }
+
+    protected class MouseClickAddFolder implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            try {
+                onOpenFolder();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

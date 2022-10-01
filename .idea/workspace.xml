@@ -9,13 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="First commit!">
-      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" afterDir="false" />
+    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景">
+      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/list.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/BaseWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/BaseWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/HBoxButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/HBoxButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/Start.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/hboxButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/hboxButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/player.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/player.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663342620718</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implemented animation for controlling buttons.">
+      <created>1664600647199</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1664600647199</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -249,7 +260,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -257,7 +280,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit!" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit!" />
+    <MESSAGE value="Implemented animation for controlling buttons." />
+    <MESSAGE value="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

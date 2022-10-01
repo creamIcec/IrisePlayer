@@ -26,7 +26,7 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
 
     HBoxButton openLastPlayedListButton = new HBoxButton("resources/icon/list.png","打开上次播放的列表");
     HBoxButton openFileButton = new HBoxButton("resources/icon/openfile.png","打开文件");
-    HBoxButton openFolderButton = new HBoxButton("resources/icon/openfolder.png","打开文件夹[开发中]");
+    HBoxButton openFolderButton = new HBoxButton("resources/icon/openfolder.png","打开文件夹");
     VBox initPaneLeft = new VBox();
 
     Scene scene = new Scene(initRoot, 1140, 740);
@@ -104,7 +104,8 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
         this.openFileButton.setOnMouseEntered(new MouseEnterButton());
         this.openFileButton.setOnMouseMoved(new MouseOverButton());
         this.openFileButton.setOnMouseExited(new MouseOutButton());
-        this.openFileButton.setOnMouseClicked(new MouseClickButton());
+        this.openFileButton.setOnMouseClicked(new MouseClickOpenFile());
+        this.openFolderButton.setOnMouseClicked(new MouseClickOpenFolder());
     }
     private Effect getMouseCircleEffect(){
         BoxBlur bb = new BoxBlur();
@@ -136,12 +137,24 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
             mouseCircle.setVisible(true);
         }
     }
-    private class MouseClickButton implements EventHandler<MouseEvent>{
+    private class MouseClickOpenFile implements EventHandler<MouseEvent>{
         @Override
         public void handle(MouseEvent mouseEvent){
             try {
                 pw = new PlayerWindow();
-                pw.start();
+                pw.start(true);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            startupStage.close();
+        }
+    }
+    private class MouseClickOpenFolder implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent mouseEvent){
+            try {
+                pw = new PlayerWindow();
+                pw.start(false);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -10,14 +10,17 @@ import javafx.util.Duration;
 public class AnimationGenerator {
     PlayerWindow targetWindow = Start.getStartUpWindow().getPlayerWindow();
     enum AnimationType{IN,OUT}
-    public KeyFrame fullColored1 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(0).fillProperty(), Paint.valueOf("rgba(17,153,238,1.0)"), Interpolator.EASE_BOTH));
-    public KeyFrame fullColored2 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(1).fillProperty(), Paint.valueOf("rgba(17,153,238,1.0)"), Interpolator.EASE_BOTH));
-    public KeyFrame fullColored3 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(2).fillProperty(), Paint.valueOf("rgba(17,153,238,1.0)"), Interpolator.EASE_BOTH));
-    public KeyFrame fullColored4 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(3).fillProperty(), Paint.valueOf("rgba(17,153,238,1.0)"), Interpolator.EASE_BOTH));
-    public KeyFrame emptyColored1 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(0).fillProperty(),Paint.valueOf("rgba(0,0,0,0.0)"),Interpolator.EASE_BOTH));
-    public KeyFrame emptyColored2 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(1).fillProperty(),Paint.valueOf("rgba(0,0,0,0.0)"),Interpolator.EASE_BOTH));
-    public KeyFrame emptyColored3 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(2).fillProperty(),Paint.valueOf("rgba(0,0,0,0.0)"),Interpolator.EASE_BOTH));
-    public KeyFrame emptyColored4 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(3).fillProperty(),Paint.valueOf("rgba(0,0,0,0.0)"),Interpolator.EASE_BOTH));
+
+    private final String fullColor = "rgba(243,204,255,1.0)";
+    private final String emptyColor = "rgba(0,0,0,0.0)";
+    public KeyFrame fullColored1 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(0).fillProperty(), Paint.valueOf(fullColor), Interpolator.EASE_BOTH));
+    public KeyFrame fullColored2 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(1).fillProperty(), Paint.valueOf(fullColor), Interpolator.EASE_BOTH));
+    public KeyFrame fullColored3 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(2).fillProperty(), Paint.valueOf(fullColor), Interpolator.EASE_BOTH));
+    public KeyFrame fullColored4 = new KeyFrame(Duration.seconds(0.3),"fullColor",new KeyValue(targetWindow.getMusicControlButtonCover(3).fillProperty(), Paint.valueOf(fullColor), Interpolator.EASE_BOTH));
+    public KeyFrame emptyColored1 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(0).fillProperty(),Paint.valueOf(emptyColor),Interpolator.EASE_BOTH));
+    public KeyFrame emptyColored2 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(1).fillProperty(),Paint.valueOf(emptyColor),Interpolator.EASE_BOTH));
+    public KeyFrame emptyColored3 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(2).fillProperty(),Paint.valueOf(emptyColor),Interpolator.EASE_BOTH));
+    public KeyFrame emptyColored4 = new KeyFrame(Duration.seconds(0.3),"emptyColor",new KeyValue(targetWindow.getMusicControlButtonCover(3).fillProperty(),Paint.valueOf(emptyColor),Interpolator.EASE_BOTH));
     public Timeline[] buttonHoverInTimeLines = {new Timeline(),new Timeline(),new Timeline(),new Timeline()};
     public Timeline[] buttonHoverOutTimeLines = {new Timeline(),new Timeline(),new Timeline(),new Timeline()};
     private void initializeTimeLine(){
@@ -45,7 +48,6 @@ public class AnimationGenerator {
         }
     }
     public AnimationGenerator(){
-
         initializeTimeLine();
     }
 }

@@ -10,7 +10,17 @@
     -fx-padding:-5px;
     -fx-spacing:-10px;
 }
+#progress-bar .track{
+    -fx-background-color:rgba(0,0,0,0.04);
+}
 #vbox-root{
+    /*-fx-alignment:top-center;*/
+    -fx-background-color:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #E3EEFFFF 0.0%, #FFE3F7FF 100.0%);
+    -fx-background-color:#ffffff90;
+    -fx-border-radius:10px;
+    -fx-background-radius:10px;
+}
+#stackpane-root{
     /*-fx-alignment:top-center;*/
     -fx-background-color:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #E3EEFFFF 0.0%, #FFE3F7FF 100.0%);
     -fx-background-color:#ffffff90;
