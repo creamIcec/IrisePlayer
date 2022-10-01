@@ -98,7 +98,7 @@ public class BaseWindow extends Stage{
             exception.printStackTrace();
         }
     }
-    protected void bindEvents(){
+    protected void bindEvents() {
         minimizeWindowButton.setOnMouseClicked(new MouseClickMinimize());
         maximizeWindowButton.setOnMouseClicked(new MouseClickMaximize());
         closeWindowButton.setOnMouseClicked(new MouseClickClose());

@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerWindow extends BaseWindow implements GeneralRender {
+    //通用循环变量
+    int index = 0;
     //根节点，包含所有控件
     VBox playerRoot = new VBox();
     //包括除了窗口控制(最小化等按钮)外的所有控件
@@ -49,6 +52,8 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     HBox controlBar = new HBox();
     //调整控件(用于提供空间，类似于div)
     HBox leftMain = new HBox();
+    //堆叠盒子，用于设计按钮的动画
+    StackPane[] buttonPanes = {new StackPane(),new StackPane(),new StackPane(),new StackPane()};
     //标题
     Label musicTitle = new Label("未知标题");
     //艺术家
@@ -92,6 +97,8 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
 
     HBoxButton removeMusic = new HBoxButton("resources/icon/delete.png","删除");
 
+    Rectangle[] buttonBackCovers = {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle()};
+
     //TODO 添加文件夹功能
     //场景
     Scene scene = new Scene(playerRoot, 1140, 740);
@@ -106,7 +113,9 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     //标记是否为初次加载，便于第一次加载直接播放(具体见下面方法)
     private boolean isFirstLoaded = true;
 
-    final Timeline ButtonTransitionTimeline = new Timeline();
+    private Timeline buttonTransitionTimeline = new Timeline();
+
+    private AnimationGenerator animationGenerator;
     //(弃用)标记是否播放结束已自动切换
     @Deprecated
     private boolean isMusicAutoChanged = false;
@@ -116,6 +125,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     //(弃用)专辑图片的包装
     @Deprecated
     Rectangle albumIconWrap;
+    //TODO: 按钮悬停鼠标动画
 
     //播放窗口构造方法
     public PlayerWindow() throws InvalidDataException, UnsupportedTagException, IOException {
@@ -131,6 +141,9 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
 
         // 启用拖拽支持
         initDragSupport(playerRoot, playerStage);
+    }
+    public Rectangle getMusicControlButtonCover(int index){
+        return buttonBackCovers[index];
     }
     //初始化方法：渲染窗口，调用事件绑定方法，绑定动态渲染
     public void start() throws Exception {
@@ -176,10 +189,13 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         musicListView.setId("music-list");
         drawWindowOperatorButtons();
         for (ImageView mcis : musicControls) {
-            mcis.setStyle("-fx-scale-x:0.6;-fx-scale-y:0.6");
+            mcis.setStyle("-fx-scale-x:0.5;-fx-scale-y:0.5");
         }
-        for(Button mcisButton : musicControlsButton){
-            mcisButton.setStyle("-fx-scale-x:0.8;-fx-scale-y:0.8;-fx-background-color:rgba(0,0,0,0.0)");
+        for(index=0;index<musicControlsButton.length;index++){
+            musicControlsButton[index].setStyle("-fx-background-color:rgba(0,0,0,0.0)");
+            musicControlsButton[index].setPrefWidth(70.0);
+            musicControlsButton[index].setPrefHeight(70.0);
+            musicControlsButton[index].setId(String.valueOf(index));
         }
         musicTitle.getStyleClass().add("title");
         musicListTitle.getStyleClass().add("title");
@@ -187,6 +203,13 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         album.setStyle("-fx-font-size:15px;-fx-font-weight:200");
         musicIcon.setFitWidth(200);
         musicIcon.setFitHeight(200);
+        for(index =0;index<=3;index++) {
+            buttonBackCovers[index].setFill(Paint.valueOf("rgba(0,0,0,0.0)"));
+            buttonBackCovers[index].setWidth(musicControlsButton[0].getScaleX() * musicControlsButton[0].getPrefWidth());
+            buttonBackCovers[index].setHeight(musicControlsButton[0].getScaleY() * musicControlsButton[0].getPrefHeight());
+            buttonBackCovers[index].setArcWidth(10);
+            buttonBackCovers[index].setArcHeight(10);
+        }
         musicListViewUI.setId("music-list-content");
         /*volumeBarPos.setY(-50);
         volumeControlBar.getTransforms().add(volumeBarPos);*/
@@ -197,7 +220,10 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         navigator.getChildren().addAll(navigatorControls[0], navigatorControls[1], navigatorControls[2]);
         playerMain.getChildren().addAll(infoMain, musicIcon, playProgress, controlBar,volumeControlBar);
         infoMain.getChildren().addAll(musicTitle, artist, album);
-        controlBar.getChildren().addAll(musicControlsButton[0], musicControlsButton[1], musicControlsButton[2], musicControlsButton[3]);
+        for(index = 0;index<=3;index++) {
+            buttonPanes[index].getChildren().addAll(buttonBackCovers[index], musicControlsButton[index]);
+        }
+        controlBar.getChildren().addAll(buttonPanes);
         //动态渲染
         playProgress.setValue(0.0d);
         playProgress.setPrefWidth(scene.getWidth()/2);
@@ -211,11 +237,11 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         System.out.println("已创建播放器窗口!");
         System.out.println("进度条长度:"+playProgress.getMax());
     }
-
     //绑定事件监听
     @Override
     public void bindEvents() {
         super.bindEvents();
+        animationGenerator = new AnimationGenerator();
         musicControlsButton[2].setOnMouseClicked(new PlayMusic());
         musicControlsButton[0].setOnMouseClicked(new PauseMusic());
         closeWindowButton.setOnMouseClicked(new MouseClickClose());
@@ -227,18 +253,20 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         volumeControlBar.setOnMouseReleased(new controlVolume());
         playProgress.setOnMouseReleased(new controlPosition());
         removeMusic.setOnMouseClicked(new mouseClickRemove());
-        for (Button mcis : musicControlsButton) {
-            mcis.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    mcis.setStyle("-fx-scale-x:0.8;-fx-scale-y:0.8;-fx-background-color:rgba(200,211,217,0.7)");
-                }
+        for (index=0;index<musicControlsButton.length;index++) {
+            musicControlsButton[index].setOnMouseEntered(mouseEvent -> {
+                //mcis.setStyle("-fx-background-color:rgba(200,211,217,0.7)");
+                Button btn = (Button)mouseEvent.getSource();
+                buttonTransitionTimeline = animationGenerator.getTimeLine(AnimationGenerator.AnimationType.IN, Integer.parseInt(btn.getId()));
+                buttonTransitionTimeline.stop();
+                buttonTransitionTimeline.play();
             });
-            mcis.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    mcis.setStyle("-fx-scale-x:0.8;-fx-scale-y:0.8;-fx-background-color:rgba(0,0,0,0.0)");
-                }
+            musicControlsButton[index].setOnMouseExited(mouseEvent -> {
+                //mcis.setStyle("-fx-background-color:rgba(0,0,0,0.0)");
+                Button btn = (Button)mouseEvent.getSource();
+                buttonTransitionTimeline = animationGenerator.getTimeLine(AnimationGenerator.AnimationType.OUT, Integer.parseInt(btn.getId()));
+                buttonTransitionTimeline.stop();
+                buttonTransitionTimeline.play();
             });
         }
     }

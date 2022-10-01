@@ -23,6 +23,8 @@ import javafx.stage.StageStyle;
 public class StartUpWindow extends BaseWindow implements GeneralRender{
     VBox initRoot = new VBox();
     HBox initPaneOverAll = new HBox();
+
+    HBoxButton openLastPlayedListButton = new HBoxButton("resources/icon/list.png","打开上次播放的列表");
     HBoxButton openFileButton = new HBoxButton("resources/icon/openfile.png","打开文件");
     HBoxButton openFolderButton = new HBoxButton("resources/icon/openfolder.png","打开文件夹[开发中]");
     VBox initPaneLeft = new VBox();
@@ -36,7 +38,7 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
 
     PlayerWindow pw;
 
-    public StartUpWindow() {
+    public StartUpWindow(){
         super();
 
         // 指定是否标准窗口（标准窗口有标题栏和边框)
@@ -92,7 +94,7 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
         initPaneLeft.setId("vbox-left");
         initRoot.setId("vbox-root");
         toolBar.setId("tool-bar");
-        initPaneLeft.getChildren().addAll(initTitle,openFileButton,openFolderButton,recentPlayed);
+        initPaneLeft.getChildren().addAll(initTitle,openFileButton,openFolderButton,recentPlayed,openLastPlayedListButton);
         initPaneOverAll.getChildren().addAll(initPaneLeft,versionDescription);
         initRoot.getChildren().addAll(toolBar,mouseCircle,initPaneOverAll);
     }
@@ -136,7 +138,7 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
     }
     private class MouseClickButton implements EventHandler<MouseEvent>{
         @Override
-        public void handle(MouseEvent mouseEvent) {
+        public void handle(MouseEvent mouseEvent){
             try {
                 pw = new PlayerWindow();
                 pw.start();
