@@ -15,6 +15,7 @@ public class Music {
     private String album;
     //参与创作的艺术家名称
     private String artist;
+
     private int lengthSeconds;
 
     private int bitRates;
