@@ -198,26 +198,27 @@ public class MusicLoader {
         System.out.println(frameCount);
     }
 
-    public static Image getMusicAlbumIcon(File _Mp3File) throws IOException, InvalidDataException, UnsupportedTagException {
-        /*Media me = new Media("File:///C:/Users/Iriseplos/Music/cloudmusic/test.mp3");
-        ObservableMap<String, Object> map = me.getMetadata();
-        Image albumIcon = (Image)map.get("image");*/
-        Mp3File mp3file = new Mp3File(_Mp3File);
+    public static Image getMusicAlbumIcon(File musicFile) throws IOException, InvalidDataException, UnsupportedTagException {
         Image albumImage;
-        if (mp3file.hasId3v2Tag()) {
-            ID3v2 id3v2Tag = mp3file.getId3v2Tag();
-            byte[] imageData = id3v2Tag.getAlbumImage();
-            if (imageData != null) {
-                //String mimeType = id3v2Tag.getAlbumImageMimeType();
-                // Write image to file - can determine appropriate file extension from the mime type
-                InputStream input = new ByteArrayInputStream(imageData);
-                albumImage = new Image(input);
-                input.close();
-            }else{
-                albumImage = new Image(getAlbumImage("resources/testImage/testImage.png"));
+        if(Objects.equals(MusicLoader.getFileExtension(musicFile), "mp3")) {
+            Mp3File mp3file = new Mp3File(musicFile);
+            if (mp3file.hasId3v2Tag()) {
+                ID3v2 id3v2Tag = mp3file.getId3v2Tag();
+                byte[] imageData = id3v2Tag.getAlbumImage();
+                if (imageData != null) {
+                    //String mimeType = id3v2Tag.getAlbumImageMimeType();
+                    // Write image to file - can determine appropriate file extension from the mime type
+                    InputStream input = new ByteArrayInputStream(imageData);
+                    albumImage = new Image(input);
+                    input.close();
+                } else {
+                    albumImage = new Image(Objects.requireNonNull(MusicLoader.getAlbumImage("testImage/testImage.png")));
+                }
+            } else {
+                albumImage = new Image(Objects.requireNonNull(MusicLoader.getAlbumImage("testImage/testImage.png")));
             }
         }else{
-            albumImage = new Image(getAlbumImage("resources/testImage/testImage.png"));
+            albumImage = new Image(Objects.requireNonNull(MusicLoader.getAlbumImage("testImage/testImage.png")));
         }
         return albumImage;
     }
@@ -237,7 +238,7 @@ public class MusicLoader {
 
     public static String getAlbumImage(String URL){
         try {
-            return MusicLoader.class.getResource(URL).toExternalForm();
+            return Objects.requireNonNull(MusicLoader.class.getResource(URL)).toExternalForm();
         }catch(NullPointerException exception){
             exception.printStackTrace();
             return null;

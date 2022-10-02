@@ -8,6 +8,9 @@
         <element id="library" level="project" name="mp3spi-1.9.9" />
         <element id="library" level="project" name="tritonus-share-0.3.11" />
       </element>
+      <element id="directory" name="userdata">
+        <element id="file-copy" path="$PROJECT_DIR$/userdata/lastList.txt" />
+      </element>
     </root>
   </artifact>
 </component>

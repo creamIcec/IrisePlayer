@@ -4,10 +4,8 @@ import com.Iriseplos.iriseplayer.mp3agic.InvalidDataException;
 import com.Iriseplos.iriseplayer.mp3agic.UnsupportedTagException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +19,9 @@ public class MusicListUI {
 
     private boolean isFirstLoad = true;
 
-    //以下方法用于生成播放列表
+    //以下方法用于生成播放列表} catch (Exception e) {
+    //                throw new RuntimeException(e);
+    //            }
     public ListView<HBox> generateListView() throws InvalidDataException, UnsupportedTagException, IOException {
         musicData.add(new MusicListHBox().getNewMusicHBox(null));
         //将数据源放进箱子里

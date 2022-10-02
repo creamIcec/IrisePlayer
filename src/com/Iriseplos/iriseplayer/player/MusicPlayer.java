@@ -3,7 +3,6 @@ package com.Iriseplos.iriseplayer.player;
 
 import com.Iriseplos.iriseplayer.agent.Agent;
 import com.Iriseplos.iriseplayer.mp3agic.InvalidDataException;
-import com.Iriseplos.iriseplayer.mp3agic.Mp3File;
 import com.Iriseplos.iriseplayer.mp3agic.UnsupportedTagException;
 import com.Iriseplos.iriseplayer.player.filesystem.Music;
 import com.Iriseplos.iriseplayer.player.filesystem.MusicList;
@@ -22,53 +21,26 @@ public class MusicPlayer {
     private static Thread playThread;   //播放音频的任务主线程（音频数据读取输出）
     private static Thread pauseThread;   //暂停音频线程
     FloatControl gainControl;
-    private int pausePos;
-
-    private SourceDataLine inputDataLine;
     private boolean isPlaying = false;
     private boolean isStopped = true;
     private boolean isPaused = false;
     private MusicLoader Ml = new MusicLoader();
     private File musicFile;
     private long playedBytes;
-    private int playedFrames = 0;
-    private int currentFileBitRates;
-    private Mp3File currentMp3File;
     private Music currentMusic;
-    private int totalFrames;
     private Line currentLine;
     private boolean isAutoNext;
-    private boolean autoChanged = false;
-    private Agent playAgent = Start.getAgent();
-    private Clip currentClip = AudioSystem.getClip();
-
-    private long lastFrameBeforePaused = 0;
-
-    private byte[] loadedMusicInput;
-
-    private int loadingCount;
-
+    private final Agent playAgent = Start.getAgent();
     private boolean istoChange = false;
 
-
-    /*public MusicPlayer(File musicFile) throws UnsupportedAudioFileException, IOException, InvalidDataException, UnsupportedTagException {
-        this.getMusicFile(musicFile);
-    }*/
-
-    public MusicPlayer(Music music) throws IOException, InvalidDataException, UnsupportedTagException, LineUnavailableException {
+    public MusicPlayer(Music music) throws IOException, InvalidDataException, UnsupportedTagException{
         this.getMusicFile(music);
         if (Objects.equals(MusicLoader.getFileExtension(musicFile), "mp3")) {
-            currentMp3File = new Mp3File(this.musicFile);
-            currentFileBitRates = MusicLoader.getSoundBitRateMP3(currentMp3File);
-            currentMusic = new Music(this.musicFile);
-            totalFrames = currentMp3File.getFrameCount();
-        } else {
             currentMusic = new Music(this.musicFile);
         }
     }
 
-    public MusicPlayer() throws LineUnavailableException {
-    }
+    public MusicPlayer(){}
 
     //TODO 实现跳帧
 
@@ -77,7 +49,6 @@ public class MusicPlayer {
     }
 
     private void playMusic(long playPos) throws Exception {
-        setAutoChanged(false);
         this.isPlaying = true;
         //MusicHandler Mh = new MusicHandler();
         if (inputStream == null) {
@@ -97,12 +68,10 @@ public class MusicPlayer {
         //currentClip.open(inputStream);   Clip相关
         //System.out.println(inputStream.getFormat());   输出语句
         //loadedMusicInput = Ml.getLoadedAllBytesFromMusicMp3(this.currentMusic);
-        if (currentLine == null) {
-            currentLine = Ml.getLineFromAudioSystem();
-        } else {
+        if (currentLine != null) {
             currentLine = null;
-            currentLine = Ml.getLineFromAudioSystem();
         }
+        currentLine = Ml.getLineFromAudioSystem();
         //System.out.println(inputStream.markSupported());   输出语句
 
         /*--------------IMPORTANT  以下为流式播放核心部分---------------*/
@@ -153,37 +122,21 @@ public class MusicPlayer {
         if (!flagNext) {
             stopMusic();
         } else {
-            if (MusicList.getMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) == MusicList.getTotal() - 1) {
+            if (playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) == MusicList.getTotal() - 1) {
                 this.currentMusic = MusicList.generateMusic(0);
             } else {
-                this.currentMusic = MusicList.generateMusic(MusicList.getMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) + 1);
+                this.currentMusic = MusicList.generateMusic(playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) + 1);
             }
             playAgent.agentSetAutoChanged();
             start(true,  0);
         }
     }
-
-    /*public void playMusic(boolean isLoop) throws Exception {
-        try {
-            if (isLoop) {
-                while (isLoop) {
-                    playMusic();
-                }
-            } else {
-                playMusic();
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-    }*/
     public boolean checkIfAutoNext() {
         return isAutoNext;
     }
 
     public void start(boolean autoNext, long playPos) throws Exception {
-        if (inputStream != null || inputDataLine != null) {
+        if (inputStream != null) {
             if (!istoChange) {
                 System.out.println("切换歌曲");
             }
@@ -207,15 +160,6 @@ public class MusicPlayer {
         });
         pauseThread.start();
     }
-
-    public void nextMusic() throws Exception {
-        stopMusic();
-    }
-
-    public void lastMusic() {
-
-    }
-
     public void continueMusic() {
         continue_();
     }
@@ -274,15 +218,10 @@ public class MusicPlayer {
     //TODO:明确4的来历及其是否为定值
     public int getPlayedFramesMp3() {
             //"4608"是怎么来的?
-            playedFrames = (int) (playedBytes / 4608);
+        int playedFrames = (int) (playedBytes / 4608);
             System.out.println("已播放帧数:" + playedFrames);
             return playedFrames;
     }
-
-    public long getPlayedFramesMp3Clip() {
-        return currentClip.getLongFramePosition();
-    }
-
     public Music getCurrentPlayingMusic() {
         return currentMusic;
     }
@@ -330,13 +269,5 @@ public class MusicPlayer {
             System.out.println("当前音量:" + gainControl.getValue());
             gainControl.setValue(delta);
         }
-    }
-
-    private void setAutoChanged(boolean YoN) {
-        autoChanged = YoN;
-    }
-
-    public boolean getIfAutoChanged() {
-        return autoChanged;
     }
 }

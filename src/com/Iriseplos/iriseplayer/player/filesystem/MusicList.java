@@ -8,16 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicList {
-    private static Music music;
     private static ArrayList<String> musicPaths = new ArrayList<>();
-
-    public static ArrayList<String> getMusicPaths() {
-        return musicPaths;
-    }
-
     public static int currentTotal = 0;
-
-    private static int currentPlayingIndex = 0;
 
     public static boolean addMusic(String fileName) {
         currentTotal++;
@@ -30,9 +22,8 @@ public class MusicList {
     }
 
     public static Music generateMusic(int indexInList) throws InvalidDataException, UnsupportedTagException, IOException {
-        music = new Music(new File(musicPaths.get(indexInList)));
         //currentIndex++;
-        return music;
+        return new Music(new File(musicPaths.get(indexInList)));
     }
     public static String getMusicName(File sourceFile) throws InvalidDataException, UnsupportedTagException, IOException {
         if(musicPaths.size() == 0 || sourceFile == null) {
@@ -62,10 +53,6 @@ public class MusicList {
             return Music.getMusicSecondsLengthForListShowing(sourceFile);
         }
     }
-
-    /*public static setCurrentPlayingIndex(int index){
-        currentPlayingIndex = index;
-    }*/
 
     public static int getTotal(){
         return currentTotal;

@@ -9,17 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景">
-      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/list.png" afterDir="false" />
+    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。">
+      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/ListSaver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IrisePlayer_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IrisePlayer_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/MusicPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/Music.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/Music.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/HBoxButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/HBoxButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListHBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListHBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/resources/musicHBox.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/resources/musicHBox.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/hboxButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/hboxButton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/openfolder.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/open-folder.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/player.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/player.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/testImage/testImage.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/testImage/testImage.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,8 +68,8 @@
     &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/musique-master&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Java/IrisePlayer/userdata/lastList.txt&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;工件&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.3248848&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
@@ -252,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664600647199</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景">
+      <created>1664635805251</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1664635805251</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -282,7 +297,8 @@
     <MESSAGE value="First commit!" />
     <MESSAGE value="Implemented animation for controlling buttons." />
     <MESSAGE value="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景" />
+    <MESSAGE value="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。" />
+    <option name="LAST_COMMIT_MESSAGE" value="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -24,9 +24,9 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
     VBox initRoot = new VBox();
     HBox initPaneOverAll = new HBox();
 
-    HBoxButton openLastPlayedListButton = new HBoxButton("resources/icon/list.png","打开上次播放的列表");
-    HBoxButton openFileButton = new HBoxButton("resources/icon/openfile.png","打开文件");
-    HBoxButton openFolderButton = new HBoxButton("resources/icon/openfolder.png","打开文件夹");
+    HBoxButton openLastPlayedListButton = new HBoxButton("resources/icon/list.png","打开上次播放的列表",300);
+    HBoxButton openFileButton = new HBoxButton("resources/icon/openfile.png","打开文件",300);
+    HBoxButton openFolderButton = new HBoxButton("resources/icon/open-folder.png","打开文件夹",300);
     VBox initPaneLeft = new VBox();
 
     Scene scene = new Scene(initRoot, 1140, 740);
@@ -65,8 +65,8 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
     public void drawUI(){
         Label initTitle = new Label("起始页");
         Label recentPlayed = new Label("最近播放");
-        Label versionDescription = new Label(" IrisePlayer prerelease\n 本程序用户界面受Violet Player启发。\n 预发布阶段");
-        Image[] iconFiles = {new Image(getImage("resources/icon/openfile.png")),new Image(getImage("resources/icon/openfolder.png"))};
+        Label versionDescription = new Label(" IrisePlayer beta-v1.0\n 本程序用户界面受Violet Player启发。\n 正式版测试阶段 \n Made by Iriseplos and all he loved.");
+        Image[] iconFiles = {new Image(getImage("resources/icon/openfile.png")),new Image(getImage("resources/icon/open-folder.png"))};
         ImageView[] iconViews = {new ImageView(iconFiles[0]),new ImageView(iconFiles[1])};
         getStyleSheet(scene,"resources/startUp.css");
         //窗口控制按钮处理
@@ -106,6 +106,7 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
         this.openFileButton.setOnMouseExited(new MouseOutButton());
         this.openFileButton.setOnMouseClicked(new MouseClickOpenFile());
         this.openFolderButton.setOnMouseClicked(new MouseClickOpenFolder());
+        this.openLastPlayedListButton.setOnMouseClicked(new MouseClickOpenLast());
     }
     private Effect getMouseCircleEffect(){
         BoxBlur bb = new BoxBlur();
@@ -142,7 +143,7 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
         public void handle(MouseEvent mouseEvent){
             try {
                 pw = new PlayerWindow();
-                pw.start(true);
+                pw.start(PlayerWindow.openType.FILE);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -154,7 +155,19 @@ public class StartUpWindow extends BaseWindow implements GeneralRender{
         public void handle(MouseEvent mouseEvent){
             try {
                 pw = new PlayerWindow();
-                pw.start(false);
+                pw.start(PlayerWindow.openType.FOLDER);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            startupStage.close();
+        }
+    }
+    private class MouseClickOpenLast implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            try {
+                pw = new PlayerWindow();
+                pw.start(PlayerWindow.openType.LASTPLAYED);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

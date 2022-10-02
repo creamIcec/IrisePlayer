@@ -17,8 +17,8 @@
     /*-fx-alignment:top-center;*/
     -fx-background-color:linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #E3EEFFFF 0.0%, #FFE3F7FF 100.0%);
     -fx-background-color:#ffffff90;
-    -fx-border-radius:10px;
-    -fx-background-radius:10px;
+    -fx-border-radius:20px;
+    -fx-background-radius:20px;
 }
 #stackpane-root{
     /*-fx-alignment:top-center;*/
@@ -32,15 +32,50 @@
     /*-fx-border-width:5px;
     -fx-border-color:#000000;*/
 }
+/*音乐列表*/
 #music-list-content{
-    -fx-background-color:rgba(0,0,0,0.5);
+    -fx-background-color:rgba(190,190,190,0.2);
     -fx-border-radius:10px;
 }
+/*音乐列表单元格*/
+#music-list-content .cell{
+    -fx-background-color:rgba(0,0,0,0.0);
+    -fx-border-radius:10px;
+}
+/*音乐列表单元格:悬停*/
+#music-list-content .cell:hover{
+    -fx-background-color:rgba(243,204,255,0.9);
+    -fx-border-radius:10px;
+}
+/*音乐列表单元格:选中*/
+#music-list-content .cell:focused{
+    -fx-background-color:rgba(255,205,224,0.9);
+    -fx-border-radius:10px;
+}
+/*音乐列表:垂直滚动条*/
+#music-list-content .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+/*音乐列表:水平滚动条 滑块*/
+#music-list-content .scroll-bar:horizontal .thumb{
+    -fx-background-color: rgb(75,75,75);
+}
+/*音乐列表:水平滚动条 轨道*/
+#music-list-content .scroll-bar:horizontal .track{
+    -fx-fill: rgba(0,0,0,0.0);
+}
+#music-list-content .scroll-bar:horizontal .increment-button{
+    -fx-opacity: 0;
+}
+#music-list-content .scroll-bar:horizontal .decrement-button{
+    -fx-opacity: 0;
+}
 #music-list{
-    -fx-padding:0px 0px 0px 0px;
+    -fx-padding:10px 10px 10px 10px;
     -fx-background-color:rgba(0,0,0,0.0);
 }
 #main{
+    -fx-padding: 0px 0px 0px 20px;
     /*-fx-border-color: #1199ee;
     -fx-border-width:5px;*/
 }

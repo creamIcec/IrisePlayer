@@ -17,22 +17,23 @@ public class HBoxButton extends HBox {
             exception.printStackTrace();
         }
     }
-    protected ImageView getImageforIcon(String URL){
+    protected ImageView getImageForIcon(String URL){
         return new ImageView(new Image(getImage(URL)));
     }
-    public HBoxButton(String iconforImageURL,String textforLabel,int width){
+    public HBoxButton(String iconForImageURL, String textForLabel, int width){
         super();
         getStyleSheet();
-        icon = this.getImageforIcon(iconforImageURL);
+        icon = this.getImageForIcon(iconForImageURL);
         this.getStyleClass().addAll("hbox-style","hbox-button-load");
-        description.setText(textforLabel);
+        description.setText(textForLabel);
         icon.getStyleClass().add("icon-load");
+        this.setSpacing(10);
         this.setMaxWidth(width);
         this.setPrefWidth(width);
         this.getChildren().addAll(icon,description);
     }
-    public HBoxButton(String iconforImageURL,String textforLabel){
-        this(iconforImageURL,textforLabel,300);
+    public HBoxButton(String iconForImageURL,String textForLabel){
+        this(iconForImageURL,textForLabel,400);
     }
     public String getImage(String URL){
         try {

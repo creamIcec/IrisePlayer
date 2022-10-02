@@ -4,6 +4,7 @@ import com.Iriseplos.iriseplayer.mp3agic.InvalidDataException;
 import com.Iriseplos.iriseplayer.mp3agic.UnsupportedTagException;
 import com.Iriseplos.iriseplayer.player.MusicPlayer;
 import com.Iriseplos.iriseplayer.player.PlayingStatus;
+import com.Iriseplos.iriseplayer.player.filesystem.ListSaver;
 import com.Iriseplos.iriseplayer.player.filesystem.MusicList;
 import com.Iriseplos.iriseplayer.player.filesystem.MusicLoader;
 import com.Iriseplos.iriseplayer.renderer.Start;
@@ -12,10 +13,13 @@ import javafx.scene.image.Image;
 import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Agent {
     private MusicPlayer musicPlayer = new MusicPlayer();
+
+    private ListSaver listSaver = new ListSaver();
 
     private boolean isSettedNext;
     public Agent() throws LineUnavailableException {}
@@ -84,11 +88,7 @@ public class Agent {
         }
     }
     public Image agentGetAlbumIcon() throws InvalidDataException, UnsupportedTagException, IOException {
-        if(Objects.equals(MusicLoader.getFileExtension(musicPlayer.getCurrentPlayingFile()), "mp3")) {
-            return MusicLoader.getMusicAlbumIcon(musicPlayer.getCurrentPlayingFile());
-        }else{
-            return new Image(MusicLoader.getAlbumImage("resources/testImage/testImage.png"));
-        }
+        return MusicLoader.getMusicAlbumIcon(musicPlayer.getCurrentPlayingFile());
     }
 
     public String agentGetCurrentMusicName(){
@@ -155,6 +155,16 @@ public class Agent {
     }
     public File agentGetCurrentPlayingFile(){
         return musicPlayer.getCurrentPlayingFile();
+    }
+    public void agentSaveMusicList(){
+        listSaver.setMusicListToSave(agentGetMusicList().toArray(new String[0]));
+        listSaver.save();
+    }
+    public String agentGetMusicLengthTime(File musicFile) throws InvalidDataException, UnsupportedTagException, IOException {
+        return MusicList.getMusicLengthInSeconds(musicFile);
+    }
+    public ArrayList<String> agentGetMusicList(){
+        return MusicList.getMusicList();
     }
 
     //暂不为列表显示启用代理类
