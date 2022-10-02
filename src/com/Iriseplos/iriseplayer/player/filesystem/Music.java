@@ -115,7 +115,7 @@ public class Music {
         if(Objects.equals(MusicLoader.getFileExtension(_musicFile), "mp3")) {
             Mp3File loadedMp3File = new Mp3File(_musicFile);
             long lengthInSeconds = loadedMp3File.getLengthInSeconds();
-            return TimeParser.parseSecondsTommss(lengthInSeconds);
+            return TimeParser.parseSecondsToMMSS(lengthInSeconds);
         }else{
             return "未知长度";
         }

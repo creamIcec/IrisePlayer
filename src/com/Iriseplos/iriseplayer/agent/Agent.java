@@ -19,22 +19,19 @@ import java.util.Objects;
 public class Agent {
     private MusicPlayer musicPlayer = new MusicPlayer();
 
-    private ListSaver listSaver = new ListSaver();
+    private final ListSaver listSaver = new ListSaver();
 
-    private boolean isSettedNext;
+    private boolean isSetNext;
     public Agent() throws LineUnavailableException {}
+
     public void toPause(){
         musicPlayer.pauseMusic();
     }
-    /*public void toContinue(){
-        musicPlayer.continueMusic();
-    }*/
+
     public void toStop() throws Exception {
         musicPlayer.stopMusic();
     }
-    /*public void toStart() throws Exception {
-        musicPlayer.start(false,0);
-    }*/
+
     public PlayingStatus agentCheckPlayingStatus(){
         return musicPlayer.checkPlayingStatus();
     }
@@ -103,8 +100,8 @@ public class Agent {
     }
 
     //返回布尔值表示是否添加成功
-    public boolean agentAddMusic(File selectedFile){
-        return MusicList.addMusic(selectedFile.getAbsolutePath());
+    public void agentAddMusic(File selectedFile){
+        MusicList.addMusic(selectedFile.getAbsolutePath());
     }
 
     public String agentRemoveMusic(int index){
@@ -112,34 +109,34 @@ public class Agent {
     }
 
     public void agentNext() throws Exception {
-        isSettedNext = false;
+        isSetNext = false;
         for(String musicItemName : MusicList.getMusicList()){
             String currentName = musicPlayer.getCurrentPlayingFile().getAbsolutePath();
-            if(currentName.equals(musicItemName) && !isSettedNext){
+            if(currentName.equals(musicItemName) && !isSetNext){
                 if(MusicList.getMusicList().indexOf(currentName) == MusicList.getTotal()-1) {
                     agentSetMusic(0);
                 }else {
                     agentSetMusic(MusicList.getMusicList().indexOf(currentName) + 1);
                 }
-                isSettedNext = true;
+                isSetNext = true;
             }
         }
-        isSettedNext = false;
+        isSetNext = false;
     }
     public void agentLast() throws Exception {
-        isSettedNext = false;
+        isSetNext = false;
         for(String musicItemName : MusicList.getMusicList()){
             String currentName = musicPlayer.getCurrentPlayingFile().getAbsolutePath();
-            if(currentName.equals(musicItemName) && !isSettedNext){
+            if(currentName.equals(musicItemName) && !isSetNext){
                 if(MusicList.getMusicList().indexOf(currentName) == 0) {
                     agentSetMusic(MusicList.getTotal()-1);
                 }else {
                     agentSetMusic(MusicList.getMusicList().indexOf(currentName) - 1);
                 }
-                isSettedNext = true;
+                isSetNext = true;
             }
         }
-        isSettedNext = false;
+        isSetNext = false;
     }
     public void agentControlVolume(float delta){
         musicPlayer.controlVolume(delta);

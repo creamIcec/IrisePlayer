@@ -27,7 +27,7 @@ public class BaseWindow extends Stage{
     Button minimizeWindowButton;
 
     Image maximizeButtonImage = new Image(getImage("resources/icon/maximize.png"));
-    Image miniwindowButtonImage = new Image(getImage("resources/icon/miniwindow.png"));
+    Image miniWindowButtonImage = new Image(getImage("resources/icon/mini-window.png"));
     protected ImageView closeWindowButtonIcon = new ImageView(new Image(getImage("resources/icon/close.png")));
     protected ImageView minimizeWindowButtonIcon = new ImageView(new Image(getImage("resources/icon/minimize.png")));
     protected ImageView maximizeWindowButtonIcon = new ImageView();
@@ -84,7 +84,7 @@ public class BaseWindow extends Stage{
 
     public String getImage(String URL){
         try {
-            return Objects.requireNonNull(getClass().getResource(URL)).toExternalForm();
+            return Objects.requireNonNull(BaseWindow.class.getResource(URL)).toExternalForm();
         }catch(NullPointerException exception){
             exception.printStackTrace();
             return null;
@@ -121,7 +121,7 @@ public class BaseWindow extends Stage{
         public void handle(MouseEvent mouseEvent) {
             if(!isMaximized) {
                 stage.setMaximized(true);
-                maximizeWindowButtonIcon.setImage(miniwindowButtonImage);
+                maximizeWindowButtonIcon.setImage(miniWindowButtonImage);
                 isMaximized = true;
             }else{
                 stage.setMaximized(false);
