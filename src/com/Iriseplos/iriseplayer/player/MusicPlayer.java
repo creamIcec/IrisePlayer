@@ -1,6 +1,5 @@
 package com.Iriseplos.iriseplayer.player;
 
-
 import com.Iriseplos.iriseplayer.agent.Agent;
 import com.Iriseplos.iriseplayer.mp3agic.InvalidDataException;
 import com.Iriseplos.iriseplayer.mp3agic.UnsupportedTagException;
@@ -14,6 +13,7 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 
 public class MusicPlayer {
@@ -29,9 +29,10 @@ public class MusicPlayer {
     private long playedBytes;
     private Music currentMusic;
     private Line currentLine;
-    private boolean isAutoNext;
+    private playOrderType flag;
     private final Agent playAgent = Start.getAgent();
     private boolean istoChange = false;
+    public enum playOrderType{ORDER,LOOP,RANDOM}
 
     public MusicPlayer(Music music) throws IOException, InvalidDataException, UnsupportedTagException{
         this.getMusicFile(music);
@@ -118,30 +119,41 @@ public class MusicPlayer {
             }
         }*/
         /*--------------IMPORTANT 以上为静态播放核心部分----------------*/
-        boolean flagNext = checkIfAutoNext();
-        if (!flagNext) {
-            stopMusic();
-        } else {
-            if (playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) == MusicList.getTotal() - 1) {
-                this.currentMusic = MusicList.generateMusic(0);
-            } else {
-                this.currentMusic = MusicList.generateMusic(playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) + 1);
+        flag = checkPlayOrderType();
+        switch (flag){
+            case ORDER -> {
+                if (playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) == MusicList.getTotal() - 1) {
+                    this.currentMusic = MusicList.generateMusic(0);
+                } else {
+                    this.currentMusic = MusicList.generateMusic(playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()) + 1);
+                }
+                playAgent.agentSetAutoChanged();
+                start(playOrderType.ORDER,  0);
             }
-            playAgent.agentSetAutoChanged();
-            start(true,  0);
+            case LOOP -> {
+                this.currentMusic = MusicList.generateMusic(playAgent.agentGetMusicList().indexOf(currentMusic.getMusicFile().getAbsolutePath()));
+                playAgent.agentSetAutoChanged();
+                start(playOrderType.LOOP,  0);
+            }
+            case RANDOM -> {
+                Random randomIndex = new Random();
+                this.currentMusic = MusicList.generateMusic(randomIndex.nextInt(MusicList.getTotal()));
+                playAgent.agentSetAutoChanged();
+                start(playOrderType.RANDOM,  0);
+            }
         }
     }
-    public boolean checkIfAutoNext() {
-        return isAutoNext;
+    public playOrderType checkPlayOrderType() {
+        return playAgent.agentGetPlayingOrder();
     }
 
-    public void start(boolean autoNext, long playPos) throws Exception {
+    public void start(playOrderType order, long playPos) throws Exception {
         if (inputStream != null) {
             if (!istoChange) {
                 System.out.println("切换歌曲");
             }
         }
-        isAutoNext = autoNext;
+        flag = order;
         playThread = new Thread(() -> {
             try {
                 playMusic(playPos);
@@ -204,7 +216,7 @@ public class MusicPlayer {
     public void changePosition(double playPercentage) throws Exception {
         istoChange = true;
         stopMusic();
-        start(true,(long) (this.playAgent.agentGetTotalByteLength(this.currentMusic.getMusicFile()) * playPercentage));
+        start(flag,(long) (this.playAgent.agentGetTotalByteLength(this.currentMusic.getMusicFile()) * playPercentage));
     }
 
     public void getMusicFile(Music music) {
@@ -215,7 +227,7 @@ public class MusicPlayer {
         return playedBytes;
     }
 
-    //TODO:明确4的来历及其是否为定值
+    //TODO:明确4608的来历及其是否为定值
     public int getPlayedFramesMp3() {
             //"4608"是怎么来的?
         int playedFrames = (int) (playedBytes / 4608);

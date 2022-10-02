@@ -9,15 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。">
+    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="A little optimization./少量优化。">
+      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/loop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/order.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/random.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/BaseWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/BaseWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/MusicPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/miniwindow.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/mini-window.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/openfile.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/open-file.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/tools/TimeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/tools/TimeParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664696469703</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="A little optimization./少量优化。">
+      <created>1664705457059</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1664705457059</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -285,7 +292,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -302,7 +309,8 @@
     <MESSAGE value="Implemented animation for controlling buttons." />
     <MESSAGE value="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景" />
     <MESSAGE value="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。" />
-    <option name="LAST_COMMIT_MESSAGE" value="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。" />
+    <MESSAGE value="A little optimization./少量优化。" />
+    <option name="LAST_COMMIT_MESSAGE" value="A little optimization./少量优化。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -310,15 +318,6 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../musique-master/musique-0.2/modules/jaudiotagger/src/org/jaudiotagger/audio/wavpack/WavPackReader.java</url>
           <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java</url>
-          <line>187</line>
-          <properties class="com.Iriseplos.iriseplayer.renderer.StartUpWindow" method="getPlayerWindow">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="76" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

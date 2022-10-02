@@ -35,16 +35,16 @@ public class Agent {
     public PlayingStatus agentCheckPlayingStatus(){
         return musicPlayer.checkPlayingStatus();
     }
-    public void controlStatus() throws Exception {
+    public void controlStatus(MusicPlayer.playOrderType order) throws Exception {
         PlayingStatus st = musicPlayer.checkPlayingStatus();
         if(st==PlayingStatus.INITIAL_LOAD){
-            musicPlayer.start(true,0);
+            musicPlayer.start(order,0);
         }else if(st==PlayingStatus.IS_PLAYING){
             musicPlayer.pauseMusic();
         }else if(st==PlayingStatus.PAUSED){
             musicPlayer.continueMusic();
         }else if(st==PlayingStatus.STOPPED){
-            musicPlayer.start(true,0);
+            musicPlayer.start(order,0);
         }
     }
     /*
@@ -162,6 +162,10 @@ public class Agent {
     }
     public ArrayList<String> agentGetMusicList(){
         return MusicList.getMusicList();
+    }
+
+    public MusicPlayer.playOrderType agentGetPlayingOrder(){
+        return Start.getStartUpWindow().getPlayerWindow().getOrderType();
     }
 
     //暂不为列表显示启用代理类

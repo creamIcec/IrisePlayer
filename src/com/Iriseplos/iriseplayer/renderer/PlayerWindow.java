@@ -3,6 +3,7 @@ package com.Iriseplos.iriseplayer.renderer;
 import com.Iriseplos.iriseplayer.agent.Agent;
 import com.Iriseplos.iriseplayer.mp3agic.InvalidDataException;
 import com.Iriseplos.iriseplayer.mp3agic.UnsupportedTagException;
+import com.Iriseplos.iriseplayer.player.MusicPlayer;
 import com.Iriseplos.iriseplayer.player.PlayingStatus;
 import com.Iriseplos.iriseplayer.renderer.musiclist.MusicListUI;
 import javafx.animation.FadeTransition;
@@ -55,7 +56,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     //调整控件(用于提供空间，类似于div)
     HBox leftMain = new HBox();
     //堆叠盒子，用于设计按钮的动画
-    StackPane[] buttonPanes = {new StackPane(), new StackPane(), new StackPane(), new StackPane()};
+    StackPane[] buttonPanes = {new StackPane(), new StackPane(), new StackPane(), new StackPane(), new StackPane()};
 
     StackPane stackPaneRoot = new StackPane();
 
@@ -85,11 +86,17 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     ListView<HBox> musicListViewUI = MusicListArea.generateListView();
     //播放进度控制条
     Slider playProgress = new Slider();
+    //播放顺序控制按钮对应图像
+    Image[] playOrderControlIcons = {new Image(getImage("resources/icon/order.png")),new Image(getImage("resources/icon/loop.png")),new Image(getImage("resources/icon/random.png"))};
     //控制按钮对应图像
     Image[] musicControlIcons = {new Image(getImage("resources/icon/volume.png")), new Image(getImage("resources/icon/last.png")), new Image(getImage("resources/icon/play.png")), new Image(getImage("resources/icon/next.png")), new Image(getImage("resources/icon/pause.png"))};
     //控制按钮图像容器(用于显示)
     ImageView[] musicControls = {new ImageView(musicControlIcons[0]), new ImageView(musicControlIcons[1]), new ImageView(musicControlIcons[2]), new ImageView(musicControlIcons[3])};
-    Button[] musicControlsButton = {new Button("", musicControls[0]), new Button("", musicControls[1]), new Button("", musicControls[2]), new Button("", musicControls[3])};
+    //播放顺序图像容器
+    ImageView playOrderControl = new ImageView(playOrderControlIcons[0]);
+
+    Button playOrderControlsButton = new Button("", playOrderControl);
+    Button[] musicControlsButton = {new Button("", musicControls[0]), new Button("", musicControls[1]), new Button("", musicControls[2]), new Button("", musicControls[3]), playOrderControlsButton};
     //左侧三个导航按钮的图像
     Image[] navigatorIcons = {new Image(getImage("resources/icon/home.png")), new Image(getImage("resources/icon/settings.png")), new Image(getImage("resources/icon/plugins.png"))};
     //左侧三个导航按钮图像容器(用于显示)
@@ -112,9 +119,11 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     HBoxButton removeMusic = new HBoxButton("resources/icon/delete.png", "从列表中移除");
 
     //播放控制按钮背景
-    Rectangle[] buttonBackCovers = {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle()};
+    Rectangle[] buttonBackCovers = {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle(),new Rectangle()};
     //进度条Mask
     Rectangle sliderMask = new Rectangle();
+    //记录当前的播放模式
+    MusicPlayer.playOrderType currentOrderType;
     //场景宽度
     int sceneWidth = 1140;
     //场景长度
@@ -168,7 +177,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         sizeToScene();
 
         // 启用拖拽支持
-        initDragSupport(playerRoot, playerStage);
+        initDragSupport(toolBar, playerStage);
     }
 
     public Rectangle getMusicControlButtonCover(int index) {
@@ -190,6 +199,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
             case LASTPLAYED -> onOpenLast();
         }
         new RefreshProgressThread().start();
+        currentOrderType = MusicPlayer.playOrderType.ORDER;
     }
 
     private void genSliderMask() {
@@ -238,7 +248,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         backgroundImage.setFitWidth(sceneWidth);
         backgroundImage.setFitHeight(sceneHeight);
         backgroundImage.setOpacity(0);
-        for (index = 0; index <= 3; index++) {
+        for (index = 0; index < buttonBackCovers.length; index++) {
             buttonBackCovers[index].setFill(Paint.valueOf("rgba(0,0,0,0.0)"));
             buttonBackCovers[index].setWidth(musicControlsButton[0].getScaleX() * musicControlsButton[0].getPrefWidth());
             buttonBackCovers[index].setHeight(musicControlsButton[0].getScaleY() * musicControlsButton[0].getPrefHeight());
@@ -259,7 +269,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         musicStatusContainer.getChildren().addAll(progressContainer,timeSpan);
         playerMain.getChildren().addAll(infoMain, musicIcon, musicStatusContainer,controlBar, volumeControlBar);
         infoMain.getChildren().addAll(musicTitle, artist, album);
-        for (index = 0; index <= 3; index++) {
+        for (index = 0; index < buttonPanes.length; index++) {
             buttonPanes[index].getChildren().addAll(buttonBackCovers[index], musicControlsButton[index]);
         }
         controlBar.getChildren().addAll(buttonPanes);
@@ -284,6 +294,9 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     @Override
     public void bindEvents() {
         super.bindEvents();
+        for(index=0;index<musicControlsButton.length;index++){
+            musicControlsButton[index].setId(String.valueOf(index));
+        }
         animationGenerator = new AnimationGenerator();
         musicControlsButton[2].setOnMouseClicked(new PlayMusic());
         musicControlsButton[0].setOnMouseClicked(new PauseMusic());
@@ -294,9 +307,10 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         musicControlsButton[3].setOnMouseClicked(new MouseClickNext());
         musicControlsButton[1].setOnMouseClicked(new MouseClickLast());
         musicControlsButton[0].setOnMouseClicked(new MouseClickVolume());
-        volumeControlBar.setOnMouseReleased(new controlVolume());
-        playProgress.setOnMouseReleased(new controlPosition());
-        removeMusic.setOnMouseClicked(new mouseClickRemove());
+        musicControlsButton[4].setOnMouseClicked(new MouseClickOrder());
+        volumeControlBar.setOnMouseReleased(new ControlVolume());
+        playProgress.setOnMouseReleased(new ControlPosition());
+        removeMusic.setOnMouseClicked(new MouseClickRemove());
         for (index = 0; index < musicControlsButton.length; index++) {
             musicControlsButton[index].setOnMouseEntered(mouseEvent -> {
                 Button btn = (Button) mouseEvent.getSource();
@@ -360,7 +374,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         File[] chosenFiles;
         directoryChooser.setTitle("选择音频文件所在文件夹");
         selectedFile = directoryChooser.showDialog(playerStage);
-        if (selectedFile.isDirectory()) {
+        if (selectedFile != null && selectedFile.isDirectory()) {
             chosenFiles = selectedFile.listFiles((dir, name) -> name.endsWith(".mp3"));
             if(chosenFiles != null && chosenFiles.length != 0) {
                 for (File chosenFile : chosenFiles) {
@@ -431,6 +445,10 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         return playAgent;
     }
 
+    public MusicPlayer.playOrderType getOrderType(){
+        return currentOrderType;
+    }
+
     private void loadMusicInfoToScreen() throws Exception {
         musicLength = playAgent.agentGetTotalLength(playAgent.agentGetCurrentPlayingFile());
         musicIcon.setImage(playAgent.agentGetAlbumIcon());
@@ -468,7 +486,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
             } else if (ps == PlayingStatus.INITIAL_LOAD || ps == PlayingStatus.STOPPED) {
                 musicControls[2].setImage(musicControlIcons[4]);
             }
-            playAgent.controlStatus();
+            playAgent.controlStatus(getOrderType());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -486,7 +504,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         @Override
         public void run() {
             try {
-                while (playerStage.isShowing()) {
+                while (playerStage.isShowing() && musicLength != 0) {
                     currentProgress = playProgress.getMax() * playAgent.agentGetPlayedLength() / musicLength;
                     Platform.runLater(() -> {
                         lastProgress = playProgress.getValue();
@@ -546,7 +564,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
                 } else if (ps == PlayingStatus.INITIAL_LOAD || ps == PlayingStatus.STOPPED) {
                     musicControls[2].setImage(musicControlIcons[4]);
                 }
-                playAgent.controlStatus();
+                playAgent.controlStatus(getOrderType());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -630,15 +648,13 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         }
     }
 
-    protected class controlVolume implements EventHandler<MouseEvent> {
+    protected class ControlVolume implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent mouseEvent) {
             playAgent.agentControlVolume((float) volumeControlBar.getValue());
         }
     }
-
-    //TODO: 实现从列表中移除音乐
-    private class mouseClickRemove implements EventHandler<MouseEvent> {
+    private class MouseClickRemove implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent mouseEvent) {
             try {
@@ -655,7 +671,18 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         }
     }
 
-    protected class controlPosition implements EventHandler<MouseEvent> {
+    private class MouseClickOrder implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+           switch (currentOrderType){
+               case ORDER -> {playOrderControl.setImage(playOrderControlIcons[1]);currentOrderType= MusicPlayer.playOrderType.LOOP;}
+               case LOOP -> {playOrderControl.setImage(playOrderControlIcons[2]);currentOrderType= MusicPlayer.playOrderType.RANDOM;}
+               case RANDOM -> {playOrderControl.setImage(playOrderControlIcons[0]);currentOrderType= MusicPlayer.playOrderType.ORDER;}
+           }
+        }
+    }
+
+    protected class ControlPosition implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent mouseEvent) {
             try {
