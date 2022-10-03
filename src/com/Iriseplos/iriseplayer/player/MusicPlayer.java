@@ -12,7 +12,6 @@ import javax.sound.sampled.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Random;
 
 
@@ -34,11 +33,11 @@ public class MusicPlayer {
     private boolean istoChange = false;
     public enum playOrderType{ORDER,LOOP,RANDOM}
 
-    public MusicPlayer(Music music) throws IOException, InvalidDataException, UnsupportedTagException{
+    public MusicPlayer(Music music) throws IOException, InvalidDataException, UnsupportedTagException, UnsupportedAudioFileException {
         this.getMusicFile(music);
-        if (Objects.equals(MusicLoader.getFileExtension(musicFile), "mp3")) {
+        //if (Objects.equals(MusicLoader.getFileExtension(musicFile), "mp3")) {
             currentMusic = new Music(this.musicFile);
-        }
+        // }
     }
 
     public MusicPlayer(){}
@@ -137,7 +136,11 @@ public class MusicPlayer {
             }
             case RANDOM -> {
                 Random randomIndex = new Random();
-                this.currentMusic = MusicList.generateMusic(randomIndex.nextInt(MusicList.getTotal()));
+                Music nextMusic = MusicList.generateMusic(randomIndex.nextInt(MusicList.getTotal()));
+                while(this.currentMusic == nextMusic){
+                    nextMusic = MusicList.generateMusic(randomIndex.nextInt(MusicList.getTotal()));
+                }
+                this.currentMusic = nextMusic;
                 playAgent.agentSetAutoChanged();
                 start(playOrderType.RANDOM,  0);
             }

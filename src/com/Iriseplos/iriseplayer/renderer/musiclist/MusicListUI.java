@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public class MusicListUI {
     //以下方法用于生成播放列表} catch (Exception e) {
     //                throw new RuntimeException(e);
     //            }
-    public ListView<HBox> generateListView() throws InvalidDataException, UnsupportedTagException, IOException {
+    public ListView<HBox> generateListView() throws InvalidDataException, UnsupportedTagException, IOException, UnsupportedAudioFileException {
         musicData.add(new MusicListHBox().getNewMusicHBox(null));
         //将数据源放进箱子里
         musicListView.setItems(musicData);
@@ -37,7 +38,7 @@ public class MusicListUI {
         return musicListView;
     }
 
-    public void addListViewContent(File sourceFile) throws InvalidDataException, UnsupportedTagException, IOException {
+    public void addListViewContent(File sourceFile) throws InvalidDataException, UnsupportedTagException, IOException, UnsupportedAudioFileException {
         if(isFirstLoad){
             musicData.remove(0);
             musicData.add(new MusicListHBox().getNewMusicHBox(sourceFile));

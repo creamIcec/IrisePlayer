@@ -6,6 +6,7 @@ import com.Iriseplos.iriseplayer.mp3agic.UnsupportedTagException;
 import com.Iriseplos.iriseplayer.player.MusicPlayer;
 import com.Iriseplos.iriseplayer.player.PlayingStatus;
 import com.Iriseplos.iriseplayer.renderer.musiclist.MusicListUI;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -22,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
@@ -31,10 +33,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+//TODO: 添加同名音乐区别的方法(如显示文件名、路径、专辑名等)
 
 public class PlayerWindow extends BaseWindow implements GeneralRender {
     //通用循环变量
@@ -55,6 +60,8 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     HBox controlBar = new HBox();
     //调整控件(用于提供空间，类似于div)
     HBox leftMain = new HBox();
+    //左侧导航按钮包装列盒子
+    HBox[] navigatorWrapper = {new HBox(),new HBox(),new HBox()};
     //堆叠盒子，用于设计按钮的动画
     StackPane[] buttonPanes = {new StackPane(), new StackPane(), new StackPane(), new StackPane(), new StackPane()};
 
@@ -122,12 +129,14 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     Rectangle[] buttonBackCovers = {new Rectangle(), new Rectangle(), new Rectangle(), new Rectangle(),new Rectangle()};
     //进度条Mask
     Rectangle sliderMask = new Rectangle();
+    //左侧导航指示线
+    Line indicator = new Line();
     //记录当前的播放模式
     MusicPlayer.playOrderType currentOrderType;
     //场景宽度
-    int sceneWidth = 1140;
+    int sceneWidth = 1280;
     //场景长度
-    int sceneHeight = 740;
+    int sceneHeight = 860;
 
 
     //TODO 添加文件夹功能
@@ -165,7 +174,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
     //TODO: 按钮悬停鼠标动画
 
     //播放窗口构造方法
-    public PlayerWindow() throws InvalidDataException, UnsupportedTagException, IOException {
+    public PlayerWindow() throws InvalidDataException, UnsupportedTagException, IOException, UnsupportedAudioFileException {
         super();
         // 指定是否标准窗口（标准窗口有标题栏和边框)
         initStyle(StageStyle.UNDECORATED); // 默认为 DECORATED
@@ -227,7 +236,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         playerRoot.setId("vbox-root");
         musicListView.setId("music-list");
         navigator.setId("navigator-bar");
-        musicListView.setPrefWidth(350);
+        musicListView.setPrefWidth(400);
         musicStatusContainer.setAlignment(Pos.CENTER_RIGHT);
         drawWindowOperatorButtons();
         for (ImageView mC : musicControls) {
@@ -264,7 +273,10 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         leftMain.getChildren().addAll(navigator, playerMain);
         addWrapper.getChildren().addAll(addMusic, addMusicFolder);
         musicListView.getChildren().addAll(musicListTitle, addWrapper, removeMusic, musicListViewUI);
-        navigator.getChildren().addAll(navigatorControls[0], navigatorControls[1], navigatorControls[2]);
+        for(index=0;index<navigatorWrapper.length;index++){
+            navigatorWrapper[index].getChildren().addAll(indicator,navigatorControls[index]);
+        }
+        navigator.getChildren().addAll(navigatorWrapper[0], navigatorWrapper[1], navigatorWrapper[2]);
         progressContainer.getChildren().addAll(sliderMask, playProgress);
         musicStatusContainer.getChildren().addAll(progressContainer,timeSpan);
         playerMain.getChildren().addAll(infoMain, musicIcon, musicStatusContainer,controlBar, volumeControlBar);
@@ -375,8 +387,8 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         directoryChooser.setTitle("选择音频文件所在文件夹");
         selectedFile = directoryChooser.showDialog(playerStage);
         if (selectedFile != null && selectedFile.isDirectory()) {
-            chosenFiles = selectedFile.listFiles((dir, name) -> name.endsWith(".mp3"));
-            if(chosenFiles != null && chosenFiles.length != 0) {
+            chosenFiles = selectedFile.listFiles((dir, name) -> name.endsWith(".wav") || name.endsWith(".mp3"));
+            if(chosenFiles.length != 0) {
                 for (File chosenFile : chosenFiles) {
                     playAgent.agentAddMusic(chosenFile);
                     MusicListArea.addListViewContent(chosenFile);
@@ -654,7 +666,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
             playAgent.agentControlVolume((float) volumeControlBar.getValue());
         }
     }
-    private class MouseClickRemove implements EventHandler<MouseEvent> {
+    protected class MouseClickRemove implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent mouseEvent) {
             try {
@@ -671,7 +683,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         }
     }
 
-    private class MouseClickOrder implements EventHandler<MouseEvent>{
+    protected class MouseClickOrder implements EventHandler<MouseEvent>{
         @Override
         public void handle(MouseEvent mouseEvent) {
            switch (currentOrderType){
@@ -682,7 +694,7 @@ public class PlayerWindow extends BaseWindow implements GeneralRender {
         }
     }
 
-    protected class ControlPosition implements EventHandler<MouseEvent> {
+    private class ControlPosition implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent mouseEvent) {
             try {

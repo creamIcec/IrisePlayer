@@ -11,6 +11,7 @@ import com.Iriseplos.iriseplayer.renderer.Start;
 import javafx.scene.image.Image;
 
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class Agent {
     }
     public long agentGetTotalLength(File mF) throws Exception {
         if(Objects.equals(MusicLoader.getFileExtension(mF), "wav")) {
-            return MusicLoader.getSoundLengthWAV(mF);
+            return MusicLoader.getSoundFrameLengthWAV(mF);
         }else if(Objects.equals(MusicLoader.getFileExtension(mF), "mp3")){
             return MusicLoader.getSoundFrameLengthMP3(mF);
         }else{
@@ -147,8 +148,8 @@ public class Agent {
     public void agentChangePosition(double playPercentage) throws Exception {
         musicPlayer.changePosition(playPercentage);
     }
-    public long agentGetTotalByteLength(File mp3File) throws Exception {
-        return MusicLoader.getTotalByteLength(mp3File);
+    public long agentGetTotalByteLength(File musicFile) throws Exception {
+        return MusicLoader.getTotalByteLength(musicFile);
     }
     public File agentGetCurrentPlayingFile(){
         return musicPlayer.getCurrentPlayingFile();
@@ -157,7 +158,7 @@ public class Agent {
         listSaver.setMusicListToSave(agentGetMusicList().toArray(new String[0]));
         listSaver.save();
     }
-    public String agentGetMusicLengthTime(File musicFile) throws InvalidDataException, UnsupportedTagException, IOException {
+    public String agentGetMusicLengthTime(File musicFile) throws InvalidDataException, UnsupportedTagException, IOException, UnsupportedAudioFileException {
         return MusicList.getMusicLengthInSeconds(musicFile);
     }
     public ArrayList<String> agentGetMusicList(){

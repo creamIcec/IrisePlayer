@@ -6,6 +6,7 @@ import com.Iriseplos.iriseplayer.player.filesystem.MusicList;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -18,7 +19,7 @@ public class MusicListHBox {
     Label timeSpan = new Label();
 
     Label album = new Label();
-    public HBox getNewMusicHBox(File sourceFile) throws InvalidDataException, UnsupportedTagException, IOException {
+    public HBox getNewMusicHBox(File sourceFile) throws InvalidDataException, UnsupportedTagException, IOException, UnsupportedAudioFileException {
         musicName = new Label(MusicList.getMusicName(sourceFile));
         artist = new Label(MusicList.getMusicArtist(sourceFile));
         album = new Label(MusicList.getMusicAlbum(sourceFile));

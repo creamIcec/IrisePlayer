@@ -9,15 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="A little optimization./少量优化。">
-      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/loop.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/order.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/resources/icon/random.png" afterDir="false" />
+    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/decoder/Decoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/decoder/Decoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/MusicPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/AnimationGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/Music.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/Music.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/MusicLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/SoundFileFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/player/filesystem/SoundFileFormat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/PlayerWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListHBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListHBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/musiclist/MusicListUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664705457059</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。">
+      <created>1664716131191</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1664716131191</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -310,7 +320,8 @@
     <MESSAGE value="Implemented folder chooser and blurred background for the player window~/添加&quot;打开文件夹&quot;功能和模糊播放窗口背景" />
     <MESSAGE value="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。" />
     <MESSAGE value="A little optimization./少量优化。" />
-    <option name="LAST_COMMIT_MESSAGE" value="A little optimization./少量优化。" />
+    <MESSAGE value="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -318,6 +329,11 @@
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/../musique-master/musique-0.2/modules/jaudiotagger/src/org/jaudiotagger/audio/wavpack/WavPackReader.java</url>
           <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/renderer/StartUpWindow.java</url>
+          <line>145</line>
+          <option name="timeStamp" value="68" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

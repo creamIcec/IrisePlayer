@@ -1,10 +1,11 @@
 package com.Iriseplos.iriseplayer.player.filesystem;
 
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+
+import static org.tritonus.share.TDebug.out;
 
 public class SoundFileFormat {
     //音频文件相关===========================================================
@@ -63,7 +64,18 @@ public class SoundFileFormat {
         soundIsBigEndian = soundDataFormat.isBigEndian();
         soundSecond = Duration.ofSeconds(Math.round(soundDataFrameLength / soundSampleRate));
     }
-    protected static void showSoundFileFormat() throws Exception {
+    public static int getSoundFrameSizeInBits(File soundFile) throws UnsupportedAudioFileException, IOException {
+        soundFileFormat = AudioSystem.getAudioFileFormat(soundFile);
+        return soundFileFormat.getFormat().getSampleSizeInBits();
+    }
+    public static long getSoundLengthInSeconds(File soundFile) throws UnsupportedAudioFileException, IOException {
+        soundFileFormat = AudioSystem.getAudioFileFormat(soundFile);
+        soundDataFormat = soundFileFormat.getFormat();
+        soundDataFrameLength = soundFileFormat.getFrameLength();
+        soundSampleRate = soundDataFormat.getSampleRate();
+        return Duration.ofSeconds(Math.round(soundDataFrameLength / soundSampleRate)).toSeconds();
+    }
+    protected static void showSoundFileFormat(){
         System.out.println("==============");
         System.out.println("音频文件大小为：" + soundFileLength + " byte 即 " + soundFileLength / 1024.0 + " kb 或 " + soundFileLength / 1024.0 / 1024.0 + " mb");
         System.out.println("音频文件类型为：" + soundFileType);
@@ -76,12 +88,38 @@ public class SoundFileFormat {
         System.out.println("以此音频数据格式的声音编码类型为：" + soundEncoding);
         System.out.println("以此音频数据格式声音的采样率为：" + soundSampleRate + " frame/s");
         System.out.println("每个样本的位数为：" + soundSampleSizeBits + " bit");
-        if(soundIsBigEndian == true){System.out.println("音频数据的字节储存顺序为：big-endian");}
-        else{System.out.println("音频数据的字节储存顺序为：littele-endian");}
+        if(soundIsBigEndian){System.out.println("音频数据的字节储存顺序为：big-endian");}
+        else{System.out.println("音频数据的字节储存顺序为：little-endian");}
         System.out.println("音频时长(四舍五入后)为：" + soundSecond.toSeconds() + " s");
-        //System.out.println("音频时长为：" + soundSecond.toMinutes() + " min " + (soundSecond.toSeconds() - soundSecond.toMinutes() * 60) + " s");
-        //System.out.println(soundSecond.toMinutes() + " : " + (soundSecond.toSeconds() - soundSecond.toMinutes() * 60));
+        // System.out.println("音频时长为：" + soundSecond.toMinutes() + " min " + (soundSecond.toSeconds() - soundSecond.toMinutes() * 60) + " s");
+        // System.out.println(soundSecond.toMinutes() + " : " + (soundSecond.toSeconds() - soundSecond.toMinutes() * 60));
         System.out.println("==============");
+    }
+    //以下方法用于测试获取音频信息，请在本类的main方法中单独调用
+    //同时适用于MP3和WAV文件
+    public static float testGetInfo(File soundFile) throws Exception {
+        AudioFileFormat audioFileFormat = AudioSystem.getAudioFileFormat(soundFile);
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+        AudioFormat audioFormat = audioInputStream.getFormat();// 或者audioFileFormat.getFormat()
+        out("--------信息开始--------");
+        out("---------AudioFileFormat---------");
+        out("Type " + audioFileFormat.getType());
+        out("byteLength " + audioFileFormat.getByteLength());
+        out("frame length " + audioFileFormat.getFrameLength());
+        out("format " + audioFileFormat.getFormat());
+        out("properties " + audioFileFormat.properties());
+        out("--------------AudioInputStream-------");
+        out("frameLength " + audioInputStream.getFrameLength());
+        out("--------AudioFormat----------");
+        out("encoding " + audioFormat.getEncoding());
+        out("channels " + audioFormat.getChannels());
+        out("sampleRate " + audioFormat.getSampleRate());
+        out("frameRate " + audioFormat.getFrameRate());
+        out("properties " + audioFormat.properties());
+        out("sampleSizeInBits " + audioFormat.getSampleSizeInBits());
+        out("frameSize " + audioFormat.getFrameSize());
+        out("--------信息结束----------");
+        return audioFileFormat.getFrameLength();
     }
 
     public static void main(String[] args) throws Exception {

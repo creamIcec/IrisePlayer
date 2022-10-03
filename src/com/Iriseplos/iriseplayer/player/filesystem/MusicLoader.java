@@ -8,8 +8,6 @@ import javax.sound.sampled.*;
 import java.io.*;
 import java.util.Objects;
 
-import static org.tritonus.share.TDebug.out;
-
 
 public class MusicLoader {
     //AudioInputStream可以从各种流(如文件)获取音频数据
@@ -77,7 +75,7 @@ public class MusicLoader {
     }*/
     public AudioInputStream seekPosition(Music music, long skippedBytes) throws Exception {
         if(Objects.equals(getFileExtension(music.getMusicFile()), "wav")){
-            soundInputStream = Decoder.decodeWAV(music.getMusicFile());
+            soundInputStream = Decoder.decodeWAV(music.getMusicFile(),skippedBytes);
             return soundInputStream;
         }else if(Objects.equals(getFileExtension(music.getMusicFile()), "mp3")){
             System.out.println("当前播放文件的比特长度:"+getTotalByteLength(music.getMusicFile()));
@@ -107,27 +105,12 @@ public class MusicLoader {
         soundSecond = Duration.ofSeconds(Math.round(soundDataFrameLength / soundSampleRate));
         return soundDataByteLength;
     }*/
-    public static long getSoundLengthWAV(File soundFile) throws Exception {
+    public static long getSoundFrameLengthWAV(File soundFile) throws Exception {
         AudioFileFormat audioFileFormat = AudioSystem.getAudioFileFormat(soundFile);
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
-        AudioFormat audioFormat = audioInputStream.getFormat();// 或者audioFileFormat.getFormat()
-        out("---------AudioFileFormat---------");
-        out("Type " + audioFileFormat.getType());
-        out("byteLength " + audioFileFormat.getByteLength());
-        out("frame length " + audioFileFormat.getFrameLength());
-        out("format " + audioFileFormat.getFormat());
-        out("properties " + audioFileFormat.properties());
-        out("--------------AudioInputStream-------");
-        out("frameLength " + audioInputStream.getFrameLength());
-        out("--------AudioFormat----------");
-        out("encoding " + audioFormat.getEncoding());
-        out("channels " + audioFormat.getChannels());
-        out("sampleRate " + audioFormat.getSampleRate());
-        out("frameRate " + audioFormat.getFrameRate());
-        out("properties " + audioFormat.properties());
-        out("sampleSizeInBits " + audioFormat.getSampleSizeInBits());
-        out("frameSize " + audioFormat.getFrameSize());
-        return audioFileFormat.getByteLength();
+        //AudioFormat audioFormat = audioInputStream.getFormat();// 或者audioFileFormat.getFormat()
+        System.out.println("总帧数:"+audioFileFormat.getFrameLength());
+        return audioFileFormat.getFrameLength();
     }
 
 
@@ -163,38 +146,11 @@ public class MusicLoader {
         }
     }
 
-    //以下方法用于测试获取Mp3信息，请在本类的main方法中单独调用
-    //同时适用于MP3和WAV文件
-    public static float testGetInfo(File soundFile) throws Exception {
-        AudioFileFormat audioFileFormat = AudioSystem.getAudioFileFormat(soundFile);
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
-        AudioFormat audioFormat = audioInputStream.getFormat();// 或者audioFileFormat.getFormat()
-        out("--------信息开始--------");
-        out("---------AudioFileFormat---------");
-        out("Type " + audioFileFormat.getType());
-        out("byteLength " + audioFileFormat.getByteLength());
-        out("frame length " + audioFileFormat.getFrameLength());
-        out("format " + audioFileFormat.getFormat());
-        out("properties " + audioFileFormat.properties());
-        out("--------------AudioInputStream-------");
-        out("frameLength " + audioInputStream.getFrameLength());
-        out("--------AudioFormat----------");
-        out("encoding " + audioFormat.getEncoding());
-        out("channels " + audioFormat.getChannels());
-        out("sampleRate " + audioFormat.getSampleRate());
-        out("frameRate " + audioFormat.getFrameRate());
-        out("properties " + audioFormat.properties());
-        out("sampleSizeInBits " + audioFormat.getSampleSizeInBits());
-        out("frameSize " + audioFormat.getFrameSize());
-        out("--------信息结束----------");
-        return audioFileFormat.getFrameLength();
-    }
-
     public static void testGetMp3InfoUsingMagic(File soundFile) throws InvalidDataException, UnsupportedTagException, IOException {
         Mp3File _mp3 = new Mp3File(soundFile);
         int frameCount = _mp3.getFrameCount();  //总帧数
         long sampleRate = _mp3.getSampleRate(); //采样率
-        String channel = _mp3.getChannelMode();
+        String channel = _mp3.getChannelMode(); //通道数
         System.out.println(frameCount);
     }
 
@@ -233,7 +189,7 @@ public class MusicLoader {
         //System.out.println(testGetInfo(new File("C:\\Users\\Iriseplos\\Music\\cloudmusic\\Fells - Tell Me It's Okay.mp3")));
         File soundFile = new File("C:\\Users\\Iriseplos\\Music\\cloudmusic\\Fells - Tell Me It's Okay.mp3");
         testGetMp3InfoUsingMagic(soundFile);
-        testGetInfo(soundFile);
+        //testGetInfo(soundFile);
     }
 
     public static String getAlbumImage(String URL){
@@ -266,11 +222,20 @@ public class MusicLoader {
         }else return null;
     }
 
-    public static long getTotalByteLength(File mp3File) throws Exception{
-        AudioFileFormat audioFileFormat = AudioSystem.getAudioFileFormat(mp3File);
-        Mp3File _mp3File = new Mp3File(mp3File);
-        long totalLength = _mp3File.getLength();//audioFileFormat.getByteLength();
-        System.out.println("总比特数:"+totalLength);
-        return totalLength;
+    public static long getTotalByteLength(File musicFile) throws Exception{
+        long totalByteLength;
+        if((Objects.equals(MusicLoader.getFileExtension(musicFile), "mp3"))){
+            Mp3File _mp3File = new Mp3File(musicFile);
+            totalByteLength = _mp3File.getLength();
+            return totalByteLength;
+        }else if((Objects.equals(MusicLoader.getFileExtension(musicFile), "wav"))){
+            AudioFileFormat audioFileFormat = AudioSystem.getAudioFileFormat(musicFile);
+            totalByteLength = (long) audioFileFormat.getFormat().getFrameSize() * audioFileFormat.getFrameLength();
+        }else{
+            //暂不支持其他格式
+            totalByteLength = 999;
+        }
+        System.out.println("总比特数:" + totalByteLength);
+        return totalByteLength;
     }
 }

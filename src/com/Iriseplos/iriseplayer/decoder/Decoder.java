@@ -11,11 +11,10 @@ import java.io.IOException;
 
 public class Decoder {
     static AudioInputStream mp3AIS;
-    public static AudioInputStream decodeMP3(File fileForFormat, long skippedBytes) throws Exception {
+    public static AudioInputStream decodeMP3(File MP3File, long skippedBytes) throws Exception {
         //理论上来说跳帧可以从这儿下手，不直接输入文件，而是输入一个流
-        AudioInputStream tempIs = AudioSystem.getAudioInputStream(fileForFormat);
+        AudioInputStream tempIs = AudioSystem.getAudioInputStream(MP3File);
         AudioFormat format = tempIs.getFormat();
-        Mp3File tempFileForFormat = new Mp3File(fileForFormat);
         /*SoundFileFormat sff = new SoundFileFormat();
         sff.showSoundFileFormat(MP3File);*/
         if(format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
@@ -27,9 +26,12 @@ public class Decoder {
         }
         return mp3AIS;
     }
-    public static AudioInputStream decodeWAV(File WAVFile) throws UnsupportedAudioFileException, IOException {
-        return AudioSystem.getAudioInputStream(WAVFile);
+    public static AudioInputStream decodeWAV(File WAVFile,long skippedBytes) throws UnsupportedAudioFileException, IOException {
+        AudioInputStream tempIs = AudioSystem.getAudioInputStream(WAVFile);
+        tempIs.skip(skippedBytes);
+        return tempIs;
     }
+
     //暂时弃用
     @Deprecated
     public static byte[] doDecodeAll(File MP3File) throws Exception {
