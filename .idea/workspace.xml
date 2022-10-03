@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。">
+    <list default="true" id="d6d69673-f60d-400a-93be-8b1046a2d2bb" name="变更" comment="Implemented basic support for wav files(progress bar displaying for wav is still under development)./完善对wav文件的基本播放支持(进度条显示仍在开发中)。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/agent/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/decoder/Decoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/Iriseplos/iriseplayer/decoder/Decoder.java" afterDir="false" />
@@ -288,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664716131191</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Implemented basic support for wav files(progress bar displaying for wav is still under development)./完善对wav文件的基本播放支持(进度条显示仍在开发中)。">
+      <created>1664779107155</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1664779107155</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -321,7 +328,8 @@
     <MESSAGE value="Designed a new view of the music list and added a new tip to the bottem-right of the progress bar which shows length of the current playing music./重新设计了音乐列表外观~同时在进度条右下角添加了一个时长标记。" />
     <MESSAGE value="A little optimization./少量优化。" />
     <MESSAGE value="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented a &quot;order of play&quot; function shown as a button controlling the play order of musics in the list(In order, randomly and loop)./添加&quot;播放顺序控制&quot;功能，可以控制音乐列表中的播放顺序(顺序播放，随机播放，单曲循环)。" />
+    <MESSAGE value="Implemented basic support for wav files(progress bar displaying for wav is still under development)./完善对wav文件的基本播放支持(进度条显示仍在开发中)。" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented basic support for wav files(progress bar displaying for wav is still under development)./完善对wav文件的基本播放支持(进度条显示仍在开发中)。" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
